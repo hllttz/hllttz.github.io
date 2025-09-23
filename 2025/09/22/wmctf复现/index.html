@@ -19,22 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hllttz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="hllttz&#39;s blog">
-<meta property="og:url" content="https://hllttz.github.io/index.html">
+    <meta name="description" content="webguess123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wmctf复现">
+<meta property="og:url" content="https://hllttz.github.io/2025/09/22/wmctf%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="hllttz&#39;s blog">
+<meta property="og:description" content="webguess123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-09-22T11:29:39.000Z">
+<meta property="article:modified_time" content="2025-09-22T12:06:50.941Z">
 <meta property="article:author" content="hllttz">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://hllttz.github.io/">
+<link rel="canonical" href="https://hllttz.github.io/2025/09/22/wmctf%E5%A4%8D%E7%8E%B0/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hllttz.github.io/2025/09/22/wmctf%E5%A4%8D%E7%8E%B0/","path":"2025/09/22/wmctf复现/","title":"wmctf复现"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>hllttz's blog</title>
+<title>wmctf复现 | hllttz's blog</title>
   
 
 
@@ -84,7 +88,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">hllttz's blog</h1>
+      <p class="site-title">hllttz's blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -110,7 +114,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -123,6 +127,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#web"><span class="nav-number">1.</span> <span class="nav-text">web</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#guess"><span class="nav-number">1.1.</span> <span class="nav-text">guess</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-pdf2text"><span class="nav-number">1.2.</span> <span class="nav-text">2.pdf2text</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#misc"><span class="nav-number">2.</span> <span class="nav-text">misc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-phishing-email"><span class="nav-number">2.1.</span> <span class="nav-text">1.phishing email</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,116 +167,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/23/%E9%80%9A%E8%BE%BEOA11-9%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/23/%E9%80%9A%E8%BE%BEOA11-9%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">通达OA11.9漏洞分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-09-23 19:42:18 / 修改时间：21:31:57" itemprop="dateCreated datePublished" datetime="2025-09-23T19:42:18+08:00">2025-09-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E9%80%9A%E8%BE%BEoa-%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">通达oa 漏洞分析</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>16k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>通达OA11.9漏洞分析</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/23/%E9%80%9A%E8%BE%BEOA11-9%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/22/wmctf%E5%A4%8D%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -285,13 +191,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
+      <meta itemprop="name" content="wmctf复现 | hllttz's blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/22/wmctf%E5%A4%8D%E7%8E%B0/" class="post-title-link" itemprop="url">wmctf复现</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          wmctf复现
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -328,8 +234,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="guess"><a href="#guess" class="headerlink" title="guess"></a>guess</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, jsonify, session, render_template, redirect</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">rd = random.Random()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_random_string</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(rd.getrandbits(<span class="number">32</span>))</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = generate_random_string()</span><br><span class="line"></span><br><span class="line">users = []</span><br><span class="line"></span><br><span class="line">a = generate_random_string()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/register&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;register.html&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    data = request.get_json()</span><br><span class="line">    username = data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Username and password are required&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">any</span>(user[<span class="string">&#x27;username&#x27;</span>] == username <span class="keyword">for</span> user <span class="keyword">in</span> users):</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Username already exists&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">    user_id = generate_random_string()</span><br><span class="line">    </span><br><span class="line">    users.append(&#123;</span><br><span class="line">        <span class="string">&#x27;user_id&#x27;</span>: user_id,</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: username,</span><br><span class="line">        <span class="string">&#x27;password&#x27;</span>: password</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">        <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;User registered successfully&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;user_id&#x27;</span>: user_id</span><br><span class="line">    &#125;), <span class="number">201</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;login.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    data = request.get_json()</span><br><span class="line">    username = data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Username and password are required&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">    user = <span class="built_in">next</span>((user <span class="keyword">for</span> user <span class="keyword">in</span> users <span class="keyword">if</span> user[<span class="string">&#x27;username&#x27;</span>] == username <span class="keyword">and</span> user[<span class="string">&#x27;password&#x27;</span>] == password), <span class="literal">None</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Invalid credentials&#x27;</span>&#125;), <span class="number">401</span></span><br><span class="line">    </span><br><span class="line">    session[<span class="string">&#x27;user_id&#x27;</span>] = user[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    session[<span class="string">&#x27;username&#x27;</span>] = user[<span class="string">&#x27;username&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">        <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Login successful&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;user_id&#x27;</span>: user[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    &#125;), <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&#x27;/api&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">protected_api</span>():</span><br><span class="line"></span><br><span class="line">    data = request.get_json()</span><br><span class="line"></span><br><span class="line">    key1 = data.get(<span class="string">&#x27;key&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> key1:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;key are required&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">    key2 = generate_random_string()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">str</span>(key1) == <span class="built_in">str</span>(key2):</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">            <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Not Allowed:&#x27;</span> + <span class="built_in">str</span>(key2) ,</span><br><span class="line">        &#125;), <span class="number">403</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    payload = data.get(<span class="string">&#x27;payload&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        <span class="built_in">eval</span>(payload, &#123;<span class="string">&#x27;__builtin__&#x27;</span>:&#123;&#125;&#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">        <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Access granted&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;user_id&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> session:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">5001</span>)</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="guess"><a href="#guess" class="headerlink" title="guess"></a>guess</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, jsonify, session, render_template, redirect</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">rd = random.Random()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_random_string</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(rd.getrandbits(<span class="number">32</span>))</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = generate_random_string()</span><br><span class="line"></span><br><span class="line">users = []</span><br><span class="line"></span><br><span class="line">a = generate_random_string()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/register&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;register.html&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    data = request.get_json()</span><br><span class="line">    username = data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Username and password are required&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">any</span>(user[<span class="string">&#x27;username&#x27;</span>] == username <span class="keyword">for</span> user <span class="keyword">in</span> users):</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Username already exists&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">    user_id = generate_random_string()</span><br><span class="line">    </span><br><span class="line">    users.append(&#123;</span><br><span class="line">        <span class="string">&#x27;user_id&#x27;</span>: user_id,</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>: username,</span><br><span class="line">        <span class="string">&#x27;password&#x27;</span>: password</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">        <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;User registered successfully&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;user_id&#x27;</span>: user_id</span><br><span class="line">    &#125;), <span class="number">201</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;login.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    data = request.get_json()</span><br><span class="line">    username = data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Username and password are required&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">    user = <span class="built_in">next</span>((user <span class="keyword">for</span> user <span class="keyword">in</span> users <span class="keyword">if</span> user[<span class="string">&#x27;username&#x27;</span>] == username <span class="keyword">and</span> user[<span class="string">&#x27;password&#x27;</span>] == password), <span class="literal">None</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;Invalid credentials&#x27;</span>&#125;), <span class="number">401</span></span><br><span class="line">    </span><br><span class="line">    session[<span class="string">&#x27;user_id&#x27;</span>] = user[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    session[<span class="string">&#x27;username&#x27;</span>] = user[<span class="string">&#x27;username&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">        <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Login successful&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;user_id&#x27;</span>: user[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">    &#125;), <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&#x27;/api&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">protected_api</span>():</span><br><span class="line"></span><br><span class="line">    data = request.get_json()</span><br><span class="line"></span><br><span class="line">    key1 = data.get(<span class="string">&#x27;key&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> key1:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;key are required&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">    key2 = generate_random_string()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">str</span>(key1) == <span class="built_in">str</span>(key2):</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">            <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Not Allowed:&#x27;</span> + <span class="built_in">str</span>(key2) ,</span><br><span class="line">        &#125;), <span class="number">403</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    payload = data.get(<span class="string">&#x27;payload&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        <span class="built_in">eval</span>(payload, &#123;<span class="string">&#x27;__builtin__&#x27;</span>:&#123;&#125;&#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">        <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Access granted&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;user_id&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> session:</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&#x27;/login&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">5001</span>)</span><br></pre></td></tr></table></figure>
 
 <p>注意到用到了<code>generate_random_string()</code></p>
 <p>然后后面的路由key2需要验证传入的key1相等，这里key2也是随机，所以想到getrandbits预测</p>
@@ -361,7 +266,6 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">solve_ctf_with_uniqueness_rule</span>():</span><br><span class="line">    polymorphicData = [</span><br><span class="line">      <span class="string">&#x27;V01DVEZbZmFrZV9mbGFnXQ==&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;bm90X3RoZV9yZWFsX2ZsYWc=&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;ZGVjb3lfZGF0YQ==&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;4oyM4p2h77iP4p2j4oyM4p2d77iL4p2c4oyI4p2g77iN4p2a77iP4p2b4oyL4p2Y&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;4p2Z77iM4p2X77iO4p2W77iM4p2V77iK4p2U77iL4p2T77iM4p2S77iN4p2R&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;4p2Q77iL4p2P77iO4p2O77iM4p2N77iK4p2M77iL4p2L77iM4p2K77iN4p2J&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;4p2I77iL4p2H77iO4p2G77iM4p2F77iK4p2E77iL4p2D77iM4p2C77iN4p2B&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;4p2A77iL4pyx77iO4py977iM4py877iK4py777iL4py677iM4py577iN4py4&#x27;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    char_map = &#123;</span><br><span class="line">              <span class="string">&#x27;4p2V&#x27;</span>: <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;4p2P&#x27;</span>: <span class="string">&#x27;D&#x27;</span>, <span class="string">&#x27;4p2F&#x27;</span>: <span class="string">&#x27;E&#x27;</span>, <span class="string">&#x27;4p2g&#x27;</span>: <span class="string">&#x27;G&#x27;</span>, <span class="string">&#x27;4p2a&#x27;</span>: <span class="string">&#x27;P&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4p2c&#x27;</span>: <span class="string">&#x27;S&#x27;</span>, <span class="string">&#x27;4oyI&#x27;</span>: <span class="string">&#x27;V&#x27;</span>, <span class="string">&#x27;4p2T&#x27;</span>: <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;77iP&#x27;</span>: <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;4p2S&#x27;</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4p2L&#x27;</span>: <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;4p2D&#x27;</span>: <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;4p2O&#x27;</span>: <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;4p2M&#x27;</span>: <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;4p2d&#x27;</span>: <span class="string">&#x27;f&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;77iO&#x27;</span>: <span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;4p2b&#x27;</span>: <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;4p2Z&#x27;</span>: <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;4oyL&#x27;</span>: <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;77iM&#x27;</span>: <span class="string">&#x27;i&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4p2J&#x27;</span>: <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;4p2B&#x27;</span>: <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;4p2R&#x27;</span>: <span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;4p2h&#x27;</span>: <span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;4p2X&#x27;</span>: <span class="string">&#x27;n&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4p2H&#x27;</span>: <span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;4pyx&#x27;</span>: <span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;4p2I&#x27;</span>: <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;4p2A&#x27;</span>: <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;4p2C&#x27;</span>: <span class="string">&#x27;s&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4p2Y&#x27;</span>: <span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;4p2j&#x27;</span>: <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;77iK&#x27;</span>: <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;4p2U&#x27;</span>: <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;4p2K&#x27;</span>: <span class="string">&#x27;t&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4p2N&#x27;</span>: <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;4p2E&#x27;</span>: <span class="string">&#x27;v&#x27;</span>, <span class="string">&#x27;4oyM&#x27;</span>: <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;77iL&#x27;</span>: <span class="string">&#x27;&#123;&#x27;</span>, <span class="string">&#x27;4py9&#x27;</span>: <span class="string">&#x27;&#125;&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;77iN&#x27;</span>: <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;4p2W&#x27;</span>: <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;4p2Q&#x27;</span>: <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;4p2G&#x27;</span>: <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;4py8&#x27;</span>: <span class="string">&#x27;!&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;4py7&#x27;</span>: <span class="string">&#x27;!&#x27;</span>, <span class="string">&#x27;4py6&#x27;</span>: <span class="string">&#x27;!&#x27;</span>, <span class="string">&#x27;4py5&#x27;</span>: <span class="string">&#x27;!&#x27;</span>, <span class="string">&#x27;4py4&#x27;</span>: <span class="string">&#x27;!&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. 合并数据源</span></span><br><span class="line">    combined_encrypted_data = <span class="string">&quot;&quot;</span>.join([polymorphicData[i] <span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 2. 解码</span></span><br><span class="line">    used_keys = <span class="built_in">set</span>()</span><br><span class="line">    sorted_keys = <span class="built_in">sorted</span>(char_map.keys(), key=<span class="built_in">len</span>, reverse=<span class="literal">True</span>)</span><br><span class="line">    pattern = re.<span class="built_in">compile</span>(<span class="string">&#x27;|&#x27;</span>.join(re.escape(k) <span class="keyword">for</span> k <span class="keyword">in</span> sorted_keys))</span><br><span class="line">    final_flag_chars = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> <span class="keyword">match</span> <span class="keyword">in</span> re.finditer(pattern, combined_encrypted_data):</span><br><span class="line">        key = <span class="keyword">match</span>.group(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> used_keys:</span><br><span class="line">            final_flag_chars.append(char_map[key])</span><br><span class="line">            used_keys.add(key)</span><br><span class="line">            </span><br><span class="line">    <span class="comment"># 3. 获得 flag</span></span><br><span class="line">    flag = <span class="string">&quot;&quot;</span>.join(final_flag_chars)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line">solve_ctf_with_uniqueness_rule()</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">wmctf&#123;SVG_Phishing_Attack_Detection_Evasion&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
 
     
@@ -369,402 +273,21 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/18/%E6%9C%80%E6%96%B0%E6%9C%80%E7%83%ADphar-gz/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/18/%E6%9C%80%E6%96%B0%E6%9C%80%E7%83%ADphar-gz/" class="post-title-link" itemprop="url">最新最热phar.gz</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-09-18 22:20:00" itemprop="dateCreated datePublished" datetime="2025-09-18T22:20:00+08:00">2025-09-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-19 08:48:25" itemprop="dateModified" datetime="2025-09-19T08:48:25+08:00">2025-09-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/php-ctf-tricks/" itemprop="url" rel="index"><span itemprop="name">php ctf_tricks</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>15k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>14 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最新最热phar.gz配合文件上传rce</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/18/%E6%9C%80%E6%96%B0%E6%9C%80%E7%83%ADphar-gz/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92/" class="post-title-link" itemprop="url">大模型安全之数据投毒</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-09-18 22:04:25" itemprop="dateCreated datePublished" datetime="2025-09-18T22:04:25+08:00">2025-09-18</time>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/17/%E4%BA%AC%E6%B4%A5%E5%86%80%E9%95%BF%E5%9F%8E%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/17/%E4%BA%AC%E6%B4%A5%E5%86%80%E9%95%BF%E5%9F%8E%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/" class="post-title-link" itemprop="url">京津冀长城杯初赛wp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-09-17 19:05:21 / 修改时间：20:16:52" itemprop="dateCreated datePublished" datetime="2025-09-17T19:05:21+08:00">2025-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/wp/" itemprop="url" rel="index"><span itemprop="name">wp</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>37k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>34 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>京津冀长城杯初赛wp(复现)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/17/%E4%BA%AC%E6%B4%A5%E5%86%80%E9%95%BF%E5%9F%8E%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/18/%E6%9C%80%E6%96%B0%E6%9C%80%E7%83%ADphar-gz/" rel="prev" title="最新最热phar.gz">
+                  <i class="fa fa-angle-left"></i> 最新最热phar.gz
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/15/SSTI1-ssti-labs%E9%80%9A%E5%85%B3wp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/15/SSTI1-ssti-labs%E9%80%9A%E5%85%B3wp/" class="post-title-link" itemprop="url">SSTI1:ssti-labs通关wp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-09-15 23:25:37" itemprop="dateCreated datePublished" datetime="2025-09-15T23:25:37+08:00">2025-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-16 21:48:38" itemprop="dateModified" datetime="2025-09-16T21:48:38+08:00">2025-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/python-ssti/" itemprop="url" rel="index"><span itemprop="name">python,ssti</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>20k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>18 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ssti_part1:ssti_labs通关wp</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/15/SSTI1-ssti-labs%E9%80%9A%E5%85%B3wp/">
-                阅读全文 &raquo;
-              </a>
+            <div class="post-nav-item">
+                <a href="/2025/09/23/%E9%80%9A%E8%BE%BEOA11-9%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="next" title="通达OA11.9漏洞分析">
+                  通达OA11.9漏洞分析 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
@@ -772,421 +295,7 @@
 
 
 
-    
 
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/13/node-js%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/13/node-js%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" class="post-title-link" itemprop="url">node.js原型链污染</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-09-13 13:06:53 / 修改时间：13:10:08" itemprop="dateCreated datePublished" datetime="2025-09-13T13:06:53+08:00">2025-09-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>node.js原型链污染漏洞及CTF例题</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/13/node-js%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/13/node-js%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/13/node-js%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" class="post-title-link" itemprop="url">node.js命令执行</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-09-13 12:46:48" itemprop="dateCreated datePublished" datetime="2025-09-13T12:46:48+08:00">2025-09-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-14 00:17:52" itemprop="dateModified" datetime="2025-09-14T00:17:52+08:00">2025-09-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>12k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>node.js命令执行的利用方式及bypass手段</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/13/node-js%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">python反序列化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-09-10 21:49:54" itemprop="dateCreated datePublished" datetime="2025-09-10T21:49:54+08:00">2025-09-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-09-11 20:04:59" itemprop="dateModified" datetime="2025-09-11T20:04:59+08:00">2025-09-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/python-pickle/" itemprop="url" rel="index"><span itemprop="name">python,pickle</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>27k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>25 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>python反序列化学习</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/10/nssctf/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="hllttz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hllttz's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/09/10/nssctf/" class="post-title-link" itemprop="url">nssctf写题日记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-09-10 13:03:56 / 修改时间：21:51:53" itemprop="dateCreated datePublished" datetime="2025-09-10T13:03:56+08:00">2025-09-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/nssctf/" itemprop="url" rel="index"><span itemprop="name">nssctf</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>54k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>49 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>nssctf web/misc</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/09/10/nssctf/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
 
 </div>
   </main>
