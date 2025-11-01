@@ -1221,7 +1221,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #7acf49;
+    background: #ffff6b;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2585,6 +2585,20 @@ header.header {
   .links-of-blogroll-item a {
     padding: 0 5px;
   }
+}
+body {
+  background: url("/images/back.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 100%;
+  background-size: cover;
+}
+.main-inner {
+  opacity: 0.95;
+}
+.header-inner {
+  opacity: 0.95;
+  z-index: 10;
 }
 .main-inner .sub-menu,
 .main-inner .post-block,
